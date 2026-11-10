@@ -1,0 +1,1643 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR and an AI-assisted game backend.">
+<link rel="canonical" href="https://0xd69736b.github.io/play.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://0xd69736b.github.io/play.html">
+<meta property="og:title" content="Career Run Shell · Dmitrii Skumin">
+<meta property="og:description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR and an AI-assisted game backend.">
+<meta property="og:image" content="https://0xd69736b.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{color-scheme:dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<style>
+/* Layout: one left-aligned console column; output flows down, the prompt and a quick-command strip dock at its end. `play` mounts an ASCII game canvas as a block inside the output. Single dark look by design. */
+:root {
+  color-scheme: dark;
+  --bg: #0d1311;
+  --panel: #131b18;
+  --line: #24332c;
+  --fg: #d3ddd7;
+  --dim: #85978d;
+  --accent: #1F8B4C;
+  --accent-hi: #62d090;
+  --on-accent: #020a05;
+  --amber: #dcae55;
+  --err: #e8907c;
+  --bar-before: #4f6359;
+  --grid: #1c2924;
+  --bug: #cf7f6e;
+  --bug-2: #bb7ea8;
+  --play-bg: #15281e;
+  --scrim: rgba(13, 19, 17, .9);
+  --mono: "JetBrains Mono", Consolas, ui-monospace, monospace;
+}
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.wrap {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 16px 40px;
+  max-width: 1040px;
+}
+.sr {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; margin: -1px; padding: 0; border: 0;
+}
+
+/* tmux-like status bar */
+.bar {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px;
+  background: var(--accent); color: var(--on-accent);
+  font-size: 13px; font-weight: 700; letter-spacing: .02em;
+  padding: 3px 10px;
+}
+.bar > span { min-width: 0; }
+.bar a.back { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.bar a.back:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+#term { padding-top: 8px; min-width: 0; }
+#out { min-width: 0; overflow-wrap: anywhere; }
+
+.block { margin-top: 18px; min-width: 0; }
+.echo { color: var(--fg); white-space: pre-wrap; }
+.ps1 { color: var(--accent-hi); font-weight: 500; white-space: nowrap; }
+.res { display: grid; gap: 10px; margin-top: 6px; min-width: 0; }
+.res > * { min-width: 0; }
+
+.name { color: var(--accent-hi); font-weight: 700; font-size: clamp(1.55rem, 5.2vw, 2.25rem); line-height: 1.15; letter-spacing: -.01em; margin-top: 4px; }
+.title { font-weight: 500; }
+.dim { color: var(--dim); }
+.hd { color: var(--accent-hi); font-weight: 700; text-wrap: balance; }
+.hd::before { content: "# "; color: var(--dim); font-weight: 400; }
+.sub { color: var(--dim); text-transform: uppercase; letter-spacing: .08em; font-size: 12.5px; margin-top: 4px; }
+.para { max-width: 76ch; }
+.err { color: var(--err); }
+.num { color: var(--amber); font-variant-numeric: tabular-nums; font-weight: 700; }
+
+.stats { display: grid; grid-template-columns: 7ch minmax(0, 1fr); gap: 0 14px; }
+.stats .lbl { min-width: 0; }
+
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 20px; }
+.kv > .k { color: var(--dim); }
+.kv > .v { min-width: 0; }
+@media (max-width: 620px) {
+  .kv.stack { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .kv.stack > .k { margin-top: 8px; }
+  .kv.stack > .k:first-child { margin-top: 0; }
+}
+
+.exp { display: grid; grid-template-columns: 22ch minmax(0, 1fr); gap: 2px 20px; }
+.exp .when { color: var(--amber); font-variant-numeric: tabular-nums; }
+.exp .what { font-weight: 700; }
+.exp .ctx { grid-column: 2; max-width: 72ch; }
+@media (max-width: 620px) {
+  .exp { grid-template-columns: minmax(0, 1fr); }
+  .exp .ctx { grid-column: 1; }
+}
+.list { display: grid; gap: 14px; }
+
+ul.bul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-width: 80ch; }
+ul.bul li { padding-left: 2ch; text-indent: -2ch; }
+ul.bul li::before { content: "- "; color: var(--dim); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { border: 1px solid var(--line); background: var(--panel); padding: 0 8px; }
+
+a { color: var(--accent-hi); text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: var(--fg); }
+.cmdlink {
+  font: inherit; color: var(--accent-hi); background: none; border: 0; padding: 0; margin: 0;
+  cursor: pointer; text-align: left;
+  text-decoration: underline dotted; text-underline-offset: 3px;
+}
+.cmdlink:hover { color: var(--fg); text-decoration-style: solid; }
+a:focus-visible, button:focus-visible, .scroll:focus-visible {
+  outline: 2px solid var(--accent-hi); outline-offset: 2px;
+}
+
+.scroll { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; min-width: 44rem; overflow-wrap: normal; font-variant-numeric: tabular-nums; }
+th { text-align: left; color: var(--dim); font-weight: 500; border-bottom: 1px solid var(--line); padding: 2px 20px 4px 0; white-space: nowrap; }
+td { padding: 3px 20px 3px 0; vertical-align: top; }
+td.n { color: var(--amber); }
+td.d { white-space: nowrap; color: var(--dim); }
+td.dl, th.dl { text-align: right; white-space: nowrap; padding-right: 0; }
+td.dl { color: var(--amber); }
+tbody tr:hover td { background: var(--panel); }
+
+pre.bars { margin: 0; font: inherit; line-height: 1.5; overflow-wrap: normal; white-space: pre; }
+.bar-b { color: var(--bar-before); }
+.bar-a { color: var(--accent-hi); }
+
+.copy {
+  font: inherit; font-size: 13px; color: var(--fg); background: var(--panel);
+  border: 1px solid var(--line); padding: 1px 10px; margin-left: 10px; cursor: pointer;
+}
+.copy:hover { border-color: var(--accent); color: var(--accent-hi); }
+.email { user-select: all; -webkit-user-select: all; color: var(--fg); }
+.status { color: var(--accent-hi); margin-left: 10px; }
+
+/* dock: prompt + chips */
+#dock { margin-top: 18px; display: grid; gap: 14px; }
+.prompt { display: flex; align-items: baseline; gap: 1ch; min-width: 0; padding: 2px 4px; margin: 0 -4px; }
+.prompt:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+#cmd {
+  flex: 1 1 auto; min-width: 0; width: 100%;
+  background: transparent; border: 0; outline: none; padding: 0;
+  color: var(--fg); caret-color: var(--accent-hi);
+  font: inherit;
+}
+#cmd::placeholder { color: var(--dim); opacity: 1; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border-top: 1px solid var(--line); padding-top: 12px; }
+.chips .sub { margin: 0 4px 0 0; }
+.chip {
+  font: inherit; font-size: 14px; color: var(--fg); background: var(--panel);
+  border: 1px solid var(--line); padding: 6px 12px; min-height: 38px; cursor: pointer;
+}
+.chip::before { content: "$ "; color: var(--dim); }
+.chip:hover { border-color: var(--accent); color: var(--accent-hi); }
+.chip.play { border-color: var(--accent); background: var(--play-bg); color: var(--accent-hi); font-weight: 700; }
+.chip.play::before { content: "▶ "; color: var(--accent-hi); }
+.chip.play:hover { color: var(--fg); }
+
+/* game block (mounted inside #out by `play`) */
+.glog { display: grid; gap: 4px; min-width: 0; }
+.glog:empty { display: none; }
+.gch { display: grid; gap: 2px; margin-top: 4px; min-width: 0; }
+.gtag { color: var(--amber); font-variant-numeric: tabular-nums; font-weight: 700; }
+.gtag.boss { color: var(--bug-2); }
+.gname { color: var(--accent-hi); font-weight: 700; }
+.gval { color: var(--amber); font-variant-numeric: tabular-nums; }
+.gbox { display: grid; gap: 6px; min-width: 0; margin-top: 4px; }
+.gbox:focus { outline: none; }
+.gbox:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; }
+.gwrap {
+  position: relative; width: 100%; aspect-ratio: 16 / 10; max-height: 70vh; min-height: 260px;
+  border: 1px solid var(--line); background: var(--bg); overflow: hidden;
+}
+.gwrap canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+}
+.gstat { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; font-size: 13px; min-width: 0; }
+.gst { white-space: pre-wrap; min-width: 0; font-variant-numeric: tabular-nums; }
+.g-hp { color: var(--accent-hi); }
+.g-xp { color: var(--amber); }
+.gstat .copy { margin-left: 0; min-height: 30px; }
+#cmd:disabled { cursor: not-allowed; }
+
+.boot { animation: rise .3s ease-out backwards; animation-delay: calc(var(--i, 0) * 80ms + 60ms); }
+@keyframes rise { from { opacity: .15; transform: translateY(3px); } }
+
+@media (max-width: 520px) {
+  body { font-size: 14px; }
+  #cmd { font-size: 16px; }
+  .ps1-host { display: none; }
+  .echo .ps1-host { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .boot { animation: none; }
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<div class="wrap">
+  <header class="bar">
+    <span><a class="back" href="./">&larr; portfolio</a> &nbsp; dmitrii-skumin:~/cv</span>
+    <span>Senior Unity Developer · CET</span>
+  </header>
+  <main id="term">
+    <div id="out" role="log" aria-live="polite" aria-label="Terminal output"></div>
+    <div id="dock">
+      <form id="cmdline" class="prompt" autocomplete="off">
+        <label for="cmd" class="sr">Command</label>
+        <span class="ps1" aria-hidden="true"><span class="ps1-host">visitor@skumin:</span>~$</span>
+        <input id="cmd" name="cmd" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="type help" aria-describedby="cmd-hint">
+      </form>
+      <p id="cmd-hint" class="sr">Type a command and press Enter. Tab completes a command, the up and down arrows browse history.</p>
+      <nav class="chips" id="chips" aria-label="Quick commands"><span class="sub">run</span></nav>
+    </div>
+  </main>
+  <noscript><p>Dmitrii Skumin, Senior Unity Developer. This console needs JavaScript. Email: jobs.kindling685@slmails.com · Telegram: <a href="https://t.me/zz_q_p_zz" target="_blank" rel="noopener">@zz_q_p_zz</a> · <a href="https://www.linkedin.com/in/dmitrii-skumin-6359241a3" target="_blank" rel="noopener">LinkedIn</a></p></noscript>
+</div>
+
+<script>
+(function () {
+'use strict';
+
+var CV = {
+ "name": "Dmitrii Skumin",
+ "title": "Senior Unity Developer",
+ "subtitle": "Client-server games · AI-assisted backend",
+ "headline_stats": [
+  { "value": "10+", "label": "years in game development" },
+  { "value": "20+", "label": "projects on mobile, PC and VR" },
+  { "value": "120M+", "label": "Google Play downloads across titles" }
+ ],
+ "summary": "Unity developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles, including three survivors-like games, plus location-based VR. Lead or sole programmer on most projects since 2018, with LiveOps on games of 100M+ and 10M+ downloads. Most recently designed and led the backend of a client-server F2P game, implemented with Claude Code agents.",
+ "availability": "Ukrainian citizen, based in Europe (CET) · Available immediately · Remote or on-site · Full-time or B2B contract",
+ "contacts": {
+  "email": "jobs.kindling685@slmails.com",
+  "telegram": "@zz_q_p_zz",
+  "telegram_url": "https://t.me/zz_q_p_zz",
+  "linkedin": "linkedin.com/in/dmitrii-skumin-6359241a3",
+  "linkedin_url": "https://www.linkedin.com/in/dmitrii-skumin-6359241a3"
+ },
+ "experience": [
+  { "role": "Backend Developer", "company": "PamPam Studio", "dates": "Jul 2026 – Nov 2026",
+    "context": "F2P survivors-like game (NDA) in soft launch, WebGL and Android. Main backend developer (~89% of backend commits) in a team of two; owned architecture, specs, review and testing, implementation by Claude Code agents." },
+  { "role": "Unity Developer", "company": "PamPam Studio", "dates": "2018 – Jul 2026",
+    "context": "Hyper-casual and hybrid-casual mobile games, midcore titles and location-based VR attractions. Lead or sole programmer on most projects." },
+  { "role": "Unity Developer", "company": "Rolling Games", "dates": "2015 – 2018",
+    "context": "Outsourcing studio: client projects for mobile, PC and location-based VR." }
+ ],
+ "backend_case": {
+  "title": "Backend of a client-server F2P survivors-like game (NDA)",
+  "process": "Spec-driven development (SDD): specs came from AI-led interviews in which I made the design decisions; Claude Code agents coded against the specs, OpenAPI contracts and tests, and I reviewed the results.",
+  "stack": ["NestJS", "TypeORM", "PostgreSQL", "TypeScript", "OpenAPI", "Docker", "Cloudflare Workers + Containers", "OpenTelemetry"],
+  "scale": [
+   { "value": "51", "label": "server modules" },
+   { "value": "121", "label": "OpenAPI operations" },
+   { "value": "~2,250", "label": "unit tests" },
+   { "value": "195", "label": "integration tests" }
+  ],
+  "before_after": [
+   { "metric": "DB queries per bootstrap request", "before": 63, "after": 13, "unit": "queries" },
+   { "metric": "DB queries per mission result", "before": 175, "before_label": "150–200", "after": 12.5, "after_label": "11–14", "unit": "queries" },
+   { "metric": "DB queries per Battle Pass claim", "before": 33, "after": 8, "unit": "queries" },
+   { "metric": "Server cold start", "before": 15.5, "before_label": "6–25 s", "after": 4.35, "after_label": "3.4–5.3 s", "unit": "s" },
+   { "metric": "Bootstrap payload", "before": 206, "after": 46, "unit": "KB" }
+  ],
+  "load_test": "Custom Node.js virtual-player tool: 600 heavy players at 106 req/s on 4 instances; login storms of 600 per minute with 0 errors."
+ },
+ "projects": [
+  { "studio": "PamPam Studio", "name": "Survivors-like F2P game (NDA)", "genre": "Survivors-like action, F2P, soft launch", "platforms": "WebGL, Android", "dates": "Jul – Nov 2026", "downloads": null, "url": null, "role": "Main backend developer",
+    "bullets": [
+     "Main backend developer (~89% of backend commits) alongside one other developer. Owned architecture, specs, review and testing; Claude Code agents implemented via spec-driven development (SDD), with specs built through AI-led interviews.",
+     "Authoritative server on NestJS, TypeORM and PostgreSQL: economy, energy, missions, shop and offers, purchases, Battle Pass, remote config and feature gates; 51 modules, 121 OpenAPI operations, ~2,250 unit and 195 integration tests.",
+     "Performance: database queries per request cut for bootstrap 63 → 13, mission result 150–200 → 11–14, Battle Pass claim 33 → 8; cold start 6–25 s → 3.4–5.3 s; load test of 600 heavy players at 106 req/s on 4 instances.",
+     "Docker images on Cloudflare Workers + Containers across up to 7 environments; OpenTelemetry metrics and SLO alerts; admin API and panel (sole developer); scaled GA4 analytics delivery 6.6 → 41.7 events/s.",
+     "Unity client network layer: moved the game from a mock local API to the server; command queue, snapshots with revision-conflict retry, session refresh, maintenance notices, platform SSO and payments."
+    ] },
+  { "studio": "PamPam Studio", "name": "Hit Master 3D", "genre": "Hyper-casual action", "platforms": "Android, iOS", "dates": "Oct 2025 – Jun 2026", "downloads": "100M+", "url": "https://play.google.com/store/apps/details?id=com.hit.master", "role": "LiveOps, sole developer",
+    "bullets": [
+     "Practically the only developer on the project in this period; shipped Android versions 1.9 → 1.23 and an iOS release.",
+     "New features: SuperHit mechanic, helicopter boss fight with rockets and drones, skins merge board with inventory, daily rewards and quests, kill streaks.",
+     "Upgrade economy and balance driven by Remote Config with A/B test groups; Google Play Games sign-in and achievements.",
+     "Projectile and boss-fight pooling and GC fixes: most frame hitches during and after levels disappeared.",
+     "SDK and engine updates: Unity 6, Android API 36, Firebase, Unity IAP 5, AppsFlyer, Azur Games UCM 6."
+    ] },
+  { "studio": "PamPam Studio", "name": "Alien Horde: Squad Survival", "genre": "Midcore survivors-like squad action", "platforms": "Android", "dates": "Feb – Oct 2025", "downloads": "5K+", "url": "https://play.google.com/store/apps/details?id=com.squads.survivals", "role": "Unity developer",
+    "bullets": [
+     "Squad core: character factory, formations with baked positions, movement and selection, on the Zenject architecture.",
+     "Enemies and three bosses (Claws, Mutant Slime, Striker) with Behavior Designer trees: charges, AOE, multishot, bouncing projectiles; elemental enemies.",
+     "Save system with MemoryPack and cloud saves (Voxel Busters) via Play Games login.",
+     "Animations, VFX and the whole audio integration for enemies and bosses; Addressables with Play Asset Delivery; Azur Games UCM SDK; UI."
+    ] },
+  { "studio": "PamPam Studio", "name": "Survive Squad", "genre": "Midcore survivors-like shooter / roguelike", "platforms": "Android, iOS", "dates": "Oct 2023 – Dec 2025", "downloads": "10M+", "url": "https://play.google.com/store/apps/details?id=com.stardust.chaossurvive", "role": "LiveOps developer",
+    "bullets": [
+     "Top committer among 12 developers in this period on a live codebase taken over from the original studio.",
+     "URP optimization for low-end devices: sprite shadows instead of real-time ones, simplified materials and VFX, FPS-driven quality switching; Xiaomi Mi A2 Lite went from 13–15 to 20–22 FPS.",
+     "Features: chapters and checkpoints, spin-wheel rewards, a new hero with a turret ultimate, an alternative payment provider behind a purchase abstraction.",
+     "Pooled audio system; migration to Unity 6; analytics, ads and attribution SDK updates; editor tools for builds and shaders."
+    ] },
+  { "studio": "PamPam Studio", "name": "Magic Friends – Color Hands", "genre": "Hybrid-casual physics action", "platforms": "Android, iOS", "dates": "Sep 2022 – Dec 2023", "downloads": "10M+", "url": "https://play.google.com/store/apps/details?id=magic.friends.rainbow", "role": "Lead programmer",
+    "bullets": [
+     "Lead programmer (~73% of commits) with a level designer and artists; took the game from version 0.0.1 to 1.1.9.",
+     "Hand mechanics on Obi Rope physics (stretch, wrap, pierce, fire, ice, thunder hands) and ragdoll enemies with PuppetMaster.",
+     "Meta systems: craft lab, boosters, world map, islands with passive income, tutorials; remote-config feature flags and A/B tests.",
+     "Ads, IAP and analytics: AppLovin MAX with several networks, Firebase, GameAnalytics, Adjust; Android and iOS release builds; mobile physics optimization."
+    ] },
+  { "studio": "PamPam Studio", "name": "Tortilla Game! Slap Challenge", "genre": "Hyper-casual", "platforms": "Android", "dates": "Jul – Nov 2022", "downloads": null, "url": "https://play.google.com/store/apps/details?id=tortilla.game.slap", "role": "Sole programmer",
+    "bullets": [ "Started the project: timing slap bar, rock-paper-scissors rounds, upgrades, cinematic cameras, game-loop UI, publisher SDK." ] },
+  { "studio": "PamPam Studio", "name": "Ragdoll Flying Runner", "genre": "Hyper-casual", "platforms": "Android, iOS", "dates": "Mar – May 2022", "downloads": null, "url": "https://play.google.com/store/apps/details?id=ragdoll.fly.runner", "role": "Main developer",
+    "bullets": [ "Turned an earlier prototype into a runner: road generation, sword and ragdoll physics, prop spawner, weapon booster and shop, publisher SDK." ] },
+  { "studio": "PamPam Studio", "name": "Diamond Land", "genre": "Casual 3D", "platforms": "Android (no longer on Google Play)", "dates": "Feb – Jun 2022", "downloads": null, "url": null, "role": "Sole programmer",
+    "bullets": [ "Started the project: procedural seed-based underground, digging and tree cutting, ground/underground camera switch, production machines, saves, analytics SDKs." ] },
+  { "studio": "PamPam Studio", "name": "Plank PvP", "genre": "Location-based VR multiplayer shooter", "platforms": "PC VR, HTC Vive, SteamVR", "dates": "Oct 2020 – Jan 2022", "downloads": null, "url": null, "role": "Lead programmer",
+    "bullets": [
+     "Sole programmer from the first commit: LAN multiplayer on MLAPI with network discovery, rounds, score table, late join.",
+     "Full-body avatars calibrated to Vive Trackers with FinalIK and synced over the network; calibration of physical planks and room to the virtual city.",
+     "HyperBlaster guns with two-handed grip, drone enemies on Behavior Designer, HDRP lighting, LODs and occlusion culling for a stable 90+ FPS."
+    ] },
+  { "studio": "PamPam Studio", "name": "Boom.io – 3D Hero Battle Arena", "genre": "Arena action", "platforms": "Android, iOS", "dates": "Oct – Nov 2020", "downloads": "10K+", "url": "https://play.google.com/store/apps/details?id=com.impostor.run", "role": "Unity developer",
+    "bullets": [ "Revive and win screens, coins panel and UI feedback animations." ] },
+  { "studio": "PamPam Studio", "name": "My Cooking Idle", "genre": "Idle tycoon", "platforms": "Android, iOS", "dates": "Apr – Aug 2020", "downloads": "10K+", "url": "https://play.google.com/store/apps/details?id=pampam.cooking.idle", "role": "Unity developer",
+    "bullets": [ "Made the first commit; boosters and modifiers (including offline income), upgrades, IAP with subscriptions and VIP, localization, data-driven UI." ] },
+  { "studio": "PamPam Studio", "name": "Crashy Cops 3D", "genre": "Hyper-casual", "platforms": "Android, iOS", "dates": "2019 – 2020", "downloads": "100K+", "url": "https://play.google.com/store/apps/details?id=com.ovivo.crashycops", "role": "LiveOps developer",
+    "bullets": [ "CPU/GPU profiling and optimization for low-end devices; refactored legacy UI and added content during LiveOps." ] },
+  { "studio": "PamPam Studio", "name": "VR Shooting LBE", "genre": "Location-based VR", "platforms": "PC VR, HTC Vive, SteamVR", "dates": "2019 – 2020", "downloads": null, "url": null, "role": "Unity developer",
+    "bullets": [ "Audio logic with Wwise; migration to SteamVR Input with custom bindings for Vive Trackers and HyperBlaster guns; laser-tag haptic vests; profiling and LiveOps features." ] },
+  { "studio": "PamPam Studio", "name": "Capsule VR cinema", "genre": "Location-based VR", "platforms": "PC VR, HTC Vive", "dates": "Apr – Aug 2019", "downloads": null, "url": null, "role": "Sole developer",
+    "bullets": [ "Stereo VR video with a video switcher and 4-channel audio; Leap Motion hands and a Vive Tracker IK avatar; capsule visuals and shaders." ] },
+  { "studio": "PamPam Studio", "name": "WebAR promo game (NDA)", "genre": "Marker-based AR game, sports-drink brand", "platforms": "Mobile web", "dates": "Autumn – Winter 2018", "downloads": null, "url": null, "role": "Lead developer",
+    "bullets": [ "Lead developer in a team of 3: core mechanics and controls in plain JavaScript and three.js (colleagues: UI, AR plugin optimization); launched from an AR marker in the mobile browser, no app install." ] },
+  { "studio": "Rolling Games", "name": "Ball Rush", "genre": "3D runner", "platforms": "Android, iOS", "dates": "Spring 2018", "downloads": null, "url": null, "role": "Unity developer",
+    "bullets": [ "The whole UI with animated effects; physics-based gameplay; parts of the Photon networking; analytics SDKs." ] },
+  { "studio": "Rolling Games", "name": "Apartments VR", "genre": "Architectural visualization", "platforms": "PC VR, Android Daydream", "dates": "Late 2017 – early 2018", "downloads": null, "url": null, "role": "Unity developer",
+    "bullets": [ "Cross-platform VR interactions and spatial UI; lighting and rendering setup for high visual quality." ] },
+  { "studio": "Rolling Games", "name": "VR Bus, VR Balloon", "genre": "Location-based VR", "platforms": "PC VR, HTC Vive · Dubai Mall VR Park (Emaar)", "dates": "Autumn 2017", "downloads": null, "url": null, "role": "Unity developer",
+    "bullets": [
+     "Bus trip and hot-air balloon rides, built in parallel with two other projects; cashier's control panel started each ride over LAN; barcode readers.",
+     "Buttkicker shakers under the bus seats driven by the ride's audio for vibration."
+    ] },
+  { "studio": "Rolling Games", "name": "Burj payment system", "genre": "B2B desktop client", "platforms": "PC · VR Burj Khalifa attraction", "dates": "Autumn 2017", "downloads": null, "url": null, "role": "Unity developer",
+    "bullets": [ "Standalone desktop client with barcode scanner integration and LAN sync with the main attraction software." ] },
+  { "studio": "Rolling Games", "name": "VRZoo", "genre": "Location-based VR", "platforms": "PC VR, HTC Vive · Dubai Mall VR Park (Emaar)", "dates": "Early 2017", "downloads": null, "url": null, "role": "Unity developer",
+    "bullets": [
+     "At launch, the top-earning attraction at Dubai Mall VR Park.",
+     "VR interactions and spatial UI; inter-process protocol between the VR app, an external launcher and the payment system."
+    ] },
+  { "studio": "Rolling Games", "name": "Elementix", "genre": "Puzzle", "platforms": "Android, iOS", "dates": "2016 – 2017 · two iterations, carried over to PamPam", "downloads": "5K+", "url": "https://play.google.com/store/apps/details?id=com.pampam.elementix", "role": "Unity developer",
+    "bullets": [ "Grid-based puzzle logic, state transitions and UI." ] },
+  { "studio": "Rolling Games", "name": "RollerCoaster Tycoon World", "genre": "Theme park simulation", "platforms": "PC, Steam", "dates": "2015 – 2016", "downloads": null, "url": "https://store.steampowered.com/app/282560/RollerCoaster_Tycoon_World/", "role": "UI developer",
+    "bullets": [ "Complex PC user interface screens." ] },
+  { "studio": "Rolling Games", "name": "7 Pin Pool", "genre": "Mobile multiplayer pool", "platforms": "Android, iOS", "dates": "2015 – 2016", "downloads": null, "url": "https://apkpure.com/7-pin-pool/com.dmd.seven.pinpool", "role": "Unity developer",
+    "bullets": [ "Extended a third-party networking asset with custom game loops and UI.", "GameSparks and Photon for authentication and matchmaking." ] },
+  { "studio": "Rolling Games", "name": "Caveman Rush", "genre": "2D runner", "platforms": "Android, iOS", "dates": "2015 – 2016", "downloads": null, "url": null, "role": "Unity developer",
+    "bullets": [ "Runner mechanics, obstacle spawning and UI for different aspect ratios." ] }
+ ],
+ "skills": [
+  ["Unity & C# (10+ years)", "Zenject, UniTask, UniRx, Addressables, pooling, profiling, URP, HDRP, UGUI, DOTween"],
+  ["Backend (with AI agents)", "TypeScript, Node.js, NestJS, TypeORM, PostgreSQL, REST / OpenAPI, Jest"],
+  ["Infrastructure", "Cloudflare Workers + Containers, Docker, OpenTelemetry, load testing"],
+  ["Networking", "client-server sync, Netcode (MLAPI), Photon, LAN"],
+  ["Gameplay & AI", "Behavior Trees, Obi Rope, PuppetMaster, FinalIK, physics-based mechanics"],
+  ["Monetization & analytics", "AppLovin MAX, AdMob, Unity IAP, AppsFlyer, Adjust, Firebase, GA4"],
+  ["Platforms", "Android, iOS, WebGL, PC VR (SteamVR, HTC Vive, Leap Motion), mobile web (three.js, WebAR)"],
+  ["AI-assisted development", "Claude Code, spec-driven development (SDD), parallel agents, MCP"],
+  ["Tools", "Rider, Visual Studio, Git, Jira"]
+ ],
+ "languages": "Russian — native · Ukrainian — native · English — Upper Intermediate (B2)",
+ "education": [
+  { "school": "Chernihiv National Technological University", "degree": "Specialist, Computer Systems and Networks", "dates": "2014 – 2015" },
+  { "school": "Chernihiv State Technological University", "degree": "Bachelor, Computer Engineering", "dates": "2010 – 2014" }
+ ],
+ "note": "Download counts from Google Play, November 2026."
+};
+
+var out = document.getElementById('out');
+var input = document.getElementById('cmd');
+var form = document.getElementById('cmdline');
+var dock = document.getElementById('dock');
+var chipsEl = document.getElementById('chips');
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+var finePointer = window.matchMedia('(pointer: fine)');
+
+var history = [];
+var hIndex = 0;
+var draft = '';
+
+/* ---------- tiny DOM helper ---------- */
+function h(tag, attrs) {
+  var el = document.createElement(tag);
+  if (attrs) {
+    Object.keys(attrs).forEach(function (k) {
+      var v = attrs[k];
+      if (v == null || v === false) return;
+      if (k === 'class') el.className = v;
+      else if (k.slice(0, 2) === 'on') el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? '' : String(v));
+    });
+  }
+  var kids = Array.prototype.slice.call(arguments, 2);
+  append(el, kids);
+  return el;
+}
+function append(el, kid) {
+  if (kid == null || kid === false) return;
+  if (Array.isArray(kid)) { kid.forEach(function (k) { append(el, k); }); return; }
+  if (typeof kid === 'string' || typeof kid === 'number') el.appendChild(document.createTextNode(String(kid)));
+  else el.appendChild(kid);
+}
+
+function cmdLink(label, command) {
+  return h('button', { type: 'button', 'class': 'cmdlink', onclick: function () { run(command); refocus(); } }, label);
+}
+function extLink(label, url) {
+  return h('a', { href: url, target: '_blank', rel: 'noopener' }, label + ' ↗');
+}
+function hd(text) { return h('div', { 'class': 'hd' }, text); }
+function sub(text) { return h('div', { 'class': 'sub' }, text); }
+function para(text, cls) { return h('p', { 'class': 'para' + (cls ? ' ' + cls : ''), style: 'margin:0' }, text); }
+function kv(rows, cls) {
+  var g = h('div', { 'class': 'kv' + (cls ? ' ' + cls : '') });
+  rows.forEach(function (r) {
+    if (!r) return;
+    g.appendChild(h('div', { 'class': 'k' }, r[0]));
+    g.appendChild(h('div', { 'class': 'v' }, r[1]));
+  });
+  return g;
+}
+function bullets(items) {
+  return h('ul', { 'class': 'bul' }, items.map(function (t) { return h('li', null, t); }));
+}
+function seeAlso(cmds) {
+  var parts = ['see also: '];
+  cmds.forEach(function (c, i) { if (i) parts.push(' · '); parts.push(cmdLink(c, c)); });
+  return h('div', { 'class': 'dim' }, parts);
+}
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+/* ---------- commands ---------- */
+var MAIN = ['help', 'about', 'experience', 'projects', 'backend', 'skills', 'education', 'contact'];
+
+var COMMANDS = [
+  { name: 'help', desc: 'list commands', run: cmdHelp },
+  { name: 'play', desc: 'run the career as a ~1 minute game (also: game, run)', run: null },
+  { name: 'whoami', desc: 'name, title and headline numbers', run: cmdWhoami },
+  { name: 'about', desc: 'summary, availability, languages', run: cmdAbout },
+  { name: 'experience', desc: 'roles and studios, newest first', run: cmdExperience },
+  { name: 'projects', usage: 'projects [filter]', desc: 'all ' + CV.projects.length + ' projects; filter by genre or platform', run: cmdProjects },
+  { name: 'project', usage: 'project <number|name>', desc: 'details, highlights and store link', run: cmdProject },
+  { name: 'backend', desc: 'case study: F2P game backend built with AI agents', run: cmdBackend },
+  { name: 'skills', desc: 'tech stack by area', run: cmdSkills },
+  { name: 'education', desc: 'degrees and languages', run: cmdEducation },
+  { name: 'contact', desc: 'email, Telegram, LinkedIn', run: cmdContact },
+  { name: 'clear', desc: 'clear the screen (Ctrl+L)', run: null }
+];
+var ALIASES = { '?': 'help', 'ls': 'help', 'man': 'help', 'cls': 'clear', 'exp': 'experience', 'work': 'experience',
+  'edu': 'education', 'stack': 'skills', 'email': 'contact', 'hire': 'contact', 'summary': 'about', 'cv': 'whoami',
+  'game': 'play', 'run': 'play' };
+
+function hintLine() {
+  var parts = ['commands: '];
+  MAIN.forEach(function (c, i) { if (i) parts.push('  '); parts.push(cmdLink(c, c)); });
+  return h('div', { 'class': 'dim' }, parts);
+}
+
+function cmdWhoami(args, opts) {
+  var bits = CV.availability.split(' · ');
+  var where = bits.shift();
+  return [
+    h('div', { 'class': 'name' }, CV.name),
+    h('div', { 'class': 'title' }, CV.title, h('span', { 'class': 'dim' }, ' · ' + CV.subtitle)),
+    h('div', { 'class': 'stats' }, CV.headline_stats.map(function (s) {
+      return [h('span', { 'class': 'num' }, s.value), h('span', { 'class': 'lbl' }, s.label)];
+    })),
+    kv([['status', bits.join(' · ')], ['based', where]]),
+    hintLine(),
+    opts && opts.intro ? h('div', null, '> type ', cmdLink('play', 'play'), ' to run the career as a game, or ', cmdLink('help', 'help'), ' for the plain CV') : null
+  ];
+}
+
+function cmdHelp() {
+  var g = h('div', { 'class': 'kv' });
+  COMMANDS.forEach(function (c) {
+    g.appendChild(h('div', { 'class': 'k' }, c.run || c.name === 'clear' || c.name === 'play' ? cmdLink(c.usage || c.name, c.name) : c.name));
+    g.appendChild(h('div', { 'class': 'v dim' }, c.desc));
+  });
+  return [
+    hd('available commands'),
+    g,
+    h('div', null, 'examples: ',
+      cmdLink('projects midcore', 'projects midcore'), '  ',
+      cmdLink('projects vr', 'projects vr'), '  ',
+      cmdLink('project 2', 'project 2'), '  ',
+      cmdLink('project plank', 'project plank')),
+    h('div', { 'class': 'dim' }, 'Tab completes · ↑/↓ browse history · Ctrl+L clears')
+  ];
+}
+
+function cmdAbout() {
+  var bits = CV.availability.split(' · ');
+  return [
+    hd('about'),
+    para(CV.summary),
+    kv([
+      ['location', bits[0]],
+      ['available', bits.slice(1).join(' · ')],
+      ['languages', CV.languages.split(' · ').join(', ')]
+    ]),
+    seeAlso(['experience', 'backend', 'contact'])
+  ];
+}
+
+function cmdExperience() {
+  return [
+    hd('experience'),
+    h('div', { 'class': 'list' }, CV.experience.map(function (e) {
+      return h('div', { 'class': 'exp' },
+        h('div', { 'class': 'when' }, e.dates),
+        h('div', { 'class': 'what' }, e.role, h('span', { 'class': 'dim' }, ' @ '), e.company),
+        h('div', { 'class': 'ctx' }, e.context));
+    })),
+    seeAlso(['projects', 'backend'])
+  ];
+}
+
+function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+function filterRe(q) { return new RegExp('(^|[^a-z0-9])' + escRe(q), 'i'); }
+var FILTER_HINTS = ['midcore', 'survivors', 'hyper-casual', 'hybrid-casual', 'vr', 'location-based', 'android', 'ios', 'webgl', 'pc', 'mobile web', 'pampam', 'rolling games'];
+
+function cmdProjects(args) {
+  var q = args.trim();
+  var list = CV.projects.map(function (p, i) { return { p: p, i: i }; });
+  if (q) {
+    var re = filterRe(q);
+    list = list.filter(function (o) {
+      var p = o.p;
+      return re.test([p.name, p.genre, p.platforms, p.studio, p.role].join(' · '));
+    });
+  }
+  if (!list.length) {
+    return [
+      h('div', { 'class': 'err' }, 'No projects match "' + q + '".'),
+      h('div', null, 'try: ', FILTER_HINTS.slice(0, 8).map(function (f, i) {
+        return [i ? '  ' : '', cmdLink(f, 'projects ' + f)];
+      }))
+    ];
+  }
+  var table = h('table', null,
+    h('thead', null, h('tr', null,
+      h('th', { scope: 'col' }, '#'), h('th', { scope: 'col' }, 'project'), h('th', { scope: 'col' }, 'dates'),
+      h('th', { scope: 'col' }, 'role'), h('th', { scope: 'col', 'class': 'dl' }, 'downloads'))),
+    h('tbody', null, list.map(function (o) {
+      return h('tr', null,
+        h('td', { 'class': 'n' }, pad2(o.i + 1)),
+        h('td', null, cmdLink(o.p.name, 'project ' + (o.i + 1))),
+        h('td', { 'class': 'd' }, o.p.dates),
+        h('td', null, o.p.role),
+        h('td', { 'class': 'dl' }, o.p.downloads || '—'));
+    })));
+  return [
+    hd(q ? 'projects matching "' + q + '"' : 'projects'),
+    h('div', { 'class': 'scroll', tabindex: '0', role: 'region', 'aria-label': 'Projects table' }, table),
+    h('div', { 'class': 'dim' },
+      list.length + ' of ' + CV.projects.length + ' projects · tap a name or type project <number> · ' + CV.note),
+    q ? null : h('div', null, 'filter: ', ['midcore', 'survivors', 'hyper-casual', 'vr', 'webgl'].map(function (f, i) {
+      return [i ? '  ' : '', cmdLink('projects ' + f, 'projects ' + f)];
+    }))
+  ];
+}
+
+function normName(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
+function findProjects(arg) {
+  var a = arg.trim().toLowerCase();
+  if (/^#?\d+$/.test(a)) {
+    var n = parseInt(a.replace('#', ''), 10);
+    return CV.projects[n - 1] ? [n - 1] : [];
+  }
+  var q = normName(a);
+  if (!q) return [];
+  var idx = CV.projects.map(function (p, i) { return i; });
+  var exact = idx.filter(function (i) { return normName(CV.projects[i].name) === q; });
+  if (exact.length) return exact;
+  return idx.filter(function (i) { return normName(CV.projects[i].name).indexOf(q) !== -1; });
+}
+function storeName(url) {
+  if (url.indexOf('play.google.com') !== -1) return 'Google Play';
+  if (url.indexOf('steampowered.com') !== -1) return 'Steam';
+  if (url.indexOf('apkpure.com') !== -1) return 'APKPure';
+  return 'store page';
+}
+
+function cmdProject(args) {
+  if (!args.trim()) {
+    return [
+      h('div', null, 'usage: project <number|name>, for example ', cmdLink('project 2', 'project 2'), ' or ', cmdLink('project survive squad', 'project survive squad')),
+      h('div', { 'class': 'dim' }, 'Type ', cmdLink('projects', 'projects'), ' to see the numbered list.')
+    ];
+  }
+  var found = findProjects(args);
+  if (!found.length) {
+    return [
+      h('div', { 'class': 'err' }, 'No project matches "' + args.trim() + '".'),
+      h('div', { 'class': 'dim' }, 'Type ', cmdLink('projects', 'projects'), ' for the list (1–' + CV.projects.length + ').')
+    ];
+  }
+  if (found.length > 1) {
+    return [
+      h('div', null, found.length + ' projects match "' + args.trim() + '":'),
+      bullets(found.map(function (i) { return [pad2(i + 1) + '  ', cmdLink(CV.projects[i].name, 'project ' + (i + 1))]; }))
+    ];
+  }
+  var i = found[0];
+  var p = CV.projects[i];
+  var nav = [];
+  if (i > 0) nav.push(cmdLink('← project ' + i, 'project ' + i));
+  if (i < CV.projects.length - 1) { if (nav.length) nav.push('   '); nav.push(cmdLink('project ' + (i + 2) + ' →', 'project ' + (i + 2))); }
+  nav.push('   ', cmdLink('all projects', 'projects'));
+  return [
+    hd(pad2(i + 1) + '  ' + p.name),
+    kv([
+      ['studio', p.studio],
+      ['genre', p.genre],
+      ['platforms', p.platforms],
+      ['dates', p.dates],
+      ['role', p.role],
+      p.downloads ? ['downloads', h('span', { 'class': 'num' }, p.downloads)] : null,
+      p.url ? ['store', extLink(storeName(p.url), p.url)] : null
+    ]),
+    bullets(p.bullets),
+    i === 0 ? h('div', null, 'Full case study with metrics: ', cmdLink('backend', 'backend')) : null,
+    h('div', { 'class': 'dim' }, nav)
+  ];
+}
+
+var EIGHTHS = ['', '▏', '▎', '▍', '▌', '▋', '▊', '▉'];
+function barString(value, max, width) {
+  var units = Math.max(1, Math.round(value / max * width * 8));
+  var full = Math.floor(units / 8);
+  return new Array(full + 1).join('█') + EIGHTHS[units % 8];
+}
+function valueLabel(label, value, unit) {
+  if (label) return /[a-z]/i.test(label) ? label : label + ' ' + unit;
+  return value + ' ' + unit;
+}
+
+function cmdBackend() {
+  var b = CV.backend_case;
+  var W = 24;
+  var pre = h('pre', { 'class': 'bars' });
+  b.before_after.forEach(function (m, idx) {
+    var max = Math.max(m.before, m.after);
+    if (idx) append(pre, '\n');
+    append(pre, [
+      m.metric + '\n',
+      '  before ', h('span', { 'class': 'bar-b', 'aria-hidden': 'true' }, barString(m.before, max, W)), ' ' + valueLabel(m.before_label, m.before, m.unit) + '\n',
+      '  after  ', h('span', { 'class': 'bar-a', 'aria-hidden': 'true' }, barString(m.after, max, W)), ' ' + valueLabel(m.after_label, m.after, m.unit) + '\n'
+    ]);
+  });
+  return [
+    hd('backend case study'),
+    h('div', { 'class': 'title' }, b.title),
+    sub('process'),
+    para(b.process),
+    sub('stack'),
+    h('div', { 'class': 'tags' }, b.stack.map(function (s) { return h('span', { 'class': 'tag' }, s); })),
+    sub('scale'),
+    h('div', { 'class': 'stats' }, b.scale.map(function (s) {
+      return [h('span', { 'class': 'num' }, s.value), h('span', { 'class': 'lbl' }, s.label)];
+    })),
+    sub('before → after'),
+    h('div', { 'class': 'scroll', tabindex: '0', role: 'region', 'aria-label': 'Before and after metrics' }, pre),
+    h('div', { 'class': 'dim' }, 'One scale per metric, the larger value fills the full bar. Ranges are drawn at their midpoint.'),
+    sub('load test'),
+    para(b.load_test),
+    h('div', { 'class': 'dim' }, 'Project details: ', cmdLink('project 1', 'project 1'), ' · ', cmdLink('skills', 'skills'))
+  ];
+}
+
+function cmdSkills() {
+  return [
+    hd('skills'),
+    kv(CV.skills.map(function (s) { return [s[0], s[1]]; }), 'stack'),
+    seeAlso(['backend', 'projects'])
+  ];
+}
+
+function cmdEducation() {
+  return [
+    hd('education'),
+    h('div', { 'class': 'list' }, CV.education.map(function (e) {
+      return h('div', { 'class': 'exp' },
+        h('div', { 'class': 'when' }, e.dates),
+        h('div', { 'class': 'what' }, e.school),
+        h('div', { 'class': 'ctx' }, e.degree));
+    })),
+    sub('languages'),
+    bullets(CV.languages.split(' · '))
+  ];
+}
+
+function cmdContact() {
+  var c = CV.contacts;
+  var email = h('span', { 'class': 'email' }, c.email);
+  var status = h('span', { 'class': 'status', role: 'status' });
+  var btn = h('button', { type: 'button', 'class': 'copy', onclick: function () { copyEmail(email, status); } }, 'copy');
+  return [
+    hd('contact'),
+    kv([
+      ['email', [email, btn, status]],
+      ['telegram', extLink(c.telegram, c.telegram_url)],
+      ['linkedin', extLink(c.linkedin, c.linkedin_url)]
+    ]),
+    h('div', { 'class': 'dim' }, CV.availability)
+  ];
+}
+
+function copyEmail(span, status) {
+  function selectIt() {
+    try {
+      var r = document.createRange();
+      r.selectNodeContents(span);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+    } catch (e) { /* ignore */ }
+    status.textContent = 'selected, copy with Ctrl+C or your device menu';
+  }
+  try {
+    navigator.clipboard.writeText(CV.contacts.email).then(function () {
+      status.textContent = 'copied';
+    }, selectIt);
+  } catch (e) {
+    selectIt();
+  }
+}
+
+function lev(a, b) {
+  var m = a.length, n = b.length, d = [], i, j;
+  for (i = 0; i <= m; i++) { d[i] = [i]; }
+  for (j = 0; j <= n; j++) { d[0][j] = j; }
+  for (i = 1; i <= m; i++) {
+    for (j = 1; j <= n; j++) {
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1));
+    }
+  }
+  return d[m][n];
+}
+
+function notFound(word) {
+  var best = null, bestD = 99;
+  COMMANDS.forEach(function (c) {
+    var dd = c.name.indexOf(word) === 0 ? 0 : lev(word, c.name);
+    if (dd < bestD) { bestD = dd; best = c.name; }
+  });
+  var lines = [h('div', { 'class': 'err' }, 'command not found: ' + word)];
+  if (best && bestD <= 2) lines.push(h('div', null, 'Did you mean ', cmdLink(best, best), '?'));
+  lines.push(h('div', { 'class': 'dim' }, 'Type ', cmdLink('help', 'help'), ' for the list, or tap a command below.'));
+  return lines;
+}
+
+/* ---------- runner ---------- */
+function echoLine(text) {
+  return h('div', { 'class': 'echo' },
+    h('span', { 'class': 'ps1' }, h('span', { 'class': 'ps1-host' }, 'visitor@skumin:'), '~$'),
+    ' ' + text);
+}
+
+function run(raw, opts) {
+  opts = opts || {};
+  var text = String(raw).trim();
+  if (text && opts.record !== false && history[history.length - 1] !== text) history.push(text);
+  hIndex = history.length;
+  draft = '';
+  var parts = text.split(/\s+/);
+  var word = (parts[0] || '').toLowerCase();
+  var name = ALIASES[word] || word;
+  var args = parts.slice(1).join(' ');
+
+  if (name === 'play') {
+    if (gameOn) { focusGame(); return; }
+    startPlay(text, opts);
+    return;
+  }
+  if (gameOn) quitGame(false);
+
+  if (name === 'clear') {
+    out.replaceChildren();
+    out.appendChild(h('div', { 'class': 'block dim' }, 'Screen cleared. Type help or tap a command below.'));
+    if (opts.scroll !== false) scrollAfter(null);
+    return;
+  }
+  var block = h('div', { 'class': 'block' }, echoLine(text));
+  if (text) {
+    var cmd = null;
+    COMMANDS.forEach(function (c) { if (c.name === name) cmd = c; });
+    var res = h('div', { 'class': 'res' });
+    append(res, cmd ? cmd.run(args, opts) : notFound(word));
+    block.appendChild(res);
+    if (opts.boot) {
+      Array.prototype.forEach.call(res.children, function (el, i) {
+        el.classList.add('boot');
+        el.style.setProperty('--i', String(i + 1));
+      });
+    }
+  }
+  out.appendChild(block);
+  if (opts.scroll !== false) scrollAfter(block);
+}
+
+function scrollAfter(block) {
+  var behavior = reduced.matches ? 'auto' : 'smooth';
+  window.requestAnimationFrame(function () {
+    var tall = block && (block.getBoundingClientRect().height + form.offsetHeight + 40 > window.innerHeight * 0.8);
+    if (tall) block.scrollIntoView({ block: 'start', behavior: behavior });
+    else dock.scrollIntoView({ block: 'end', behavior: behavior });
+  });
+}
+
+function refocus() {
+  if (gameOn) { focusGame(); return; }
+  if (finePointer.matches) {
+    try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
+  }
+}
+
+/* ---------- completion ---------- */
+function commonPrefix(list) {
+  if (!list.length) return '';
+  var p = list[0];
+  list.forEach(function (s) {
+    var k = 0;
+    while (k < p.length && k < s.length && p.charAt(k).toLowerCase() === s.charAt(k).toLowerCase()) k++;
+    p = p.slice(0, k);
+  });
+  return p;
+}
+
+function complete() {
+  var v = input.value;
+  var before, token, cands, links;
+  var m;
+  if ((m = v.match(/^(\s*)(\S*)$/))) {
+    before = m[1];
+    token = m[2].toLowerCase();
+    cands = COMMANDS.map(function (c) { return c.name; }).filter(function (n) { return n.indexOf(token) === 0; });
+    links = function (list) { return list.map(function (n) { return cmdLink(n, n); }); };
+  } else if ((m = v.match(/^(\s*project\s+)(.*)$/i))) {
+    before = m[1];
+    token = m[2];
+    var t = token.toLowerCase();
+    var idxs = [];
+    CV.projects.forEach(function (p, i) { if (p.name.toLowerCase().indexOf(t) === 0) idxs.push(i); });
+    cands = idxs.map(function (i) { return CV.projects[i].name; });
+    links = function () { return idxs.map(function (i) { return cmdLink(CV.projects[i].name, 'project ' + (i + 1)); }); };
+  } else if ((m = v.match(/^(\s*projects\s+)(.*)$/i))) {
+    before = m[1];
+    token = m[2];
+    cands = FILTER_HINTS.filter(function (f) { return f.indexOf(token.toLowerCase()) === 0; });
+    links = function (list) { return list.map(function (f) { return cmdLink(f, 'projects ' + f); }); };
+  } else {
+    return;
+  }
+  if (!cands.length) return;
+  if (cands.length === 1) {
+    input.value = before + cands[0] + (before ? '' : ' ');
+    return;
+  }
+  var cp = commonPrefix(cands);
+  if (cp.length > token.length) {
+    input.value = before + cp;
+    return;
+  }
+  var row = [];
+  links(cands).forEach(function (l, i) { if (i) row.push('   '); row.push(l); });
+  out.appendChild(h('div', { 'class': 'block' }, echoLine(v), h('div', { 'class': 'res' }, h('div', null, row))));
+  scrollAfter(null);
+}
+
+/* ---------- game: career.run (ASCII survivors-like inside the output) ---------- */
+var MONO = '"JetBrains Mono", Consolas, ui-monospace, monospace';
+var rootCss = getComputedStyle(document.documentElement);
+var GC = {};
+['bg', 'panel', 'line', 'fg', 'dim', 'accent', 'accent-hi', 'amber', 'err', 'grid', 'bug', 'bug-2', 'scrim'].forEach(function (k) {
+  GC[k] = rootCss.getPropertyValue('--' + k).trim() || '#888888';
+});
+function clampN(v, a, b) { return v < a ? a : v > b ? b : v; }
+function rep(ch, n) { return n > 0 ? new Array(n + 1).join(ch) : ''; }
+function projBy(n) {
+  for (var i = 0; i < CV.projects.length; i++) if (CV.projects[i].name === n) return CV.projects[i];
+  return { bullets: [], role: '', dates: '' };
+}
+function firstClause(s) { var t = String(s).split(/;\s/)[0].replace(/[.:]$/, ''); return t + '.'; }
+function lcFirst(s) { return /^[A-Z][A-Z0-9]/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1); }
+
+var RG = CV.experience[2], PP = CV.experience[1];
+var MF = projBy('Magic Friends – Color Hands'), SS = projBy('Survive Squad'), HM = projBy('Hit Master 3D');
+var VZ = projBy('VRZoo'), VB = projBy('VR Bus, VR Balloon'), CC = projBy('Crashy Cops 3D');
+var CHAPTERS = [
+  { title: 'Rolling Games', tag: RG.dates, up: 'twin', upName: 'twin shot',
+    facts: [RG.context,
+      'RollerCoaster Tycoon World (PC, Steam): ' + lcFirst(projBy('RollerCoaster Tycoon World').bullets[0]),
+      '7 Pin Pool: ' + projBy('7 Pin Pool').bullets[1]] },
+  { title: 'Dubai Mall VR Park', tag: '2017', up: 'orbit', upName: 'orbit shards',
+    facts: ['VRZoo: ' + lcFirst(VZ.bullets[0]),
+      'VR Bus, VR Balloon: ' + lcFirst(firstClause(VB.bullets[0])),
+      'Location-based VR on ' + VZ.platforms.split(' · ')[0] + ', with Rolling Games.'] },
+  { title: 'PamPam Studio: hyper-casual', tag: 'from 2018', up: 'rate', upName: 'quick fire',
+    facts: [PP.context.split('. ')[0] + '.',
+      'Crashy Cops 3D (' + CC.downloads + ', LiveOps): ' + lcFirst(firstClause(CC.bullets[0])),
+      'Ragdoll Flying Runner, Tortilla Game! Slap Challenge, Diamond Land: main or sole programmer.'] },
+  { title: MF.name, tag: MF.downloads, up: 'pierce', upName: 'rope shot (pierce)',
+    facts: [MF.dates + ' · ' + MF.bullets[0], MF.bullets[1]] },
+  { title: SS.name, tag: SS.downloads, up: 'drone', upName: 'squad drone',
+    facts: [SS.genre + ', ' + SS.role + ', ' + SS.dates + '.',
+      SS.bullets[0],
+      'URP optimization for low-end devices: Xiaomi Mi A2 Lite went from 13–15 to 20–22 FPS.'] },
+  { title: HM.name, tag: HM.downloads, up: 'power', upName: 'SuperHit (double damage)',
+    facts: [HM.bullets[0], HM.bullets[3]] }
+];
+var NEEDS = [7, 9, 11, 12, 14, 15];
+var BOSS_HP = 160;
+var MOVE = { arrowup: 1, arrowdown: 1, arrowleft: 1, arrowright: 1, w: 1, a: 1, s: 1, d: 1 };
+var BUG_CH = ['x', '%', '&'];
+
+function metricText(m) {
+  function f(v, label) { return label ? label : v + (m.unit === 'queries' ? '' : ' ' + m.unit); }
+  return { name: m.metric, before: f(m.before, m.before_label), after: f(m.after, m.after_label) };
+}
+
+var gameOn = false;
+var G = null;
+var curLog = null, curRes = null;
+var W = 0, H = 0, U = 1, WW = 0, WH = 0, gdpr = 1;
+var gkeys = {};
+var joy = { active: false, id: null, ox: 0, oy: 0, x: 0, y: 0 };
+var rafId = 0, lastT = 0;
+
+/* persistent game DOM, moved into the newest `play` block */
+var gcanvas = h('canvas', { 'aria-hidden': 'true' });
+var gctx = gcanvas.getContext('2d');
+var gwrap = h('div', { 'class': 'gwrap' }, gcanvas);
+var gHp = h('span', { 'class': 'g-hp' }), gLv = h('span'), gXpL = h('span', { 'class': 'dim' }), gXp = h('span', { 'class': 'g-xp' });
+var gQuit = h('button', { type: 'button', 'class': 'copy', onclick: function () { quitGame(false); } }, 'quit (Esc)');
+var gStat = h('div', { 'class': 'gstat' },
+  h('span', { 'class': 'gst', id: 'g-status' }, h('span', { 'class': 'dim' }, 'HP '), gHp, h('span', { 'class': 'dim' }, '  LV '), gLv, gXpL, gXp),
+  gQuit);
+var gbox = h('div', { 'class': 'gbox', id: 'game', tabindex: '0', role: 'group',
+  'aria-label': 'Game area. Move with W A S D or the arrow keys, or drag on the canvas. Attacks are automatic. Enter continues after a level-up. Escape or Q quits.',
+  'aria-describedby': 'g-status' }, gwrap, gStat);
+
+function newRun() {
+  G = { state: 'ready', t: 0, level: 1, xp: 0, need: NEEDS[0], ups: {}, bossPhase: false, pendingBoss: false,
+    boss: null, phase: 0, won: false, winT: 0, card: -1, spawnAcc: 0, shake: 0, msg: '', msgT: 0,
+    P: { x: null, y: null, r: 11, hp: 100, maxHp: 100, fire: 0.3, hurtT: 9, inv: 0, facing: -Math.PI / 2, orbA: 0 },
+    enemies: [], shots: [], gems: [], fades: [], bullets: [], drone: null };
+}
+
+function focusGame() {
+  try { gbox.focus({ preventScroll: true }); } catch (e) { gbox.focus(); }
+}
+
+function startPlay(text, opts) {
+  var resuming = !!(G && G.state !== 'done');
+  if (!resuming) newRun();
+  if (G.state === 'play' || G.state === 'paused') G.state = 'ready';
+  var block = h('div', { 'class': 'block' }, echoLine(text));
+  curRes = h('div', { 'class': 'res' });
+  if (resuming) {
+    curRes.appendChild(h('div', null, 'career.run resumed at ', h('span', { 'class': 'gtag' }, G.bossPhase ? 'BOSS' : 'LV ' + G.level), ', progress kept.'));
+  } else {
+    curRes.appendChild(h('div', null, 'career.run: ten years of bugs. Collect amber ', h('span', { 'class': 'gval' }, '+'), ' to level up; each level unlocks a chapter, then the boss.'));
+  }
+  curRes.appendChild(h('div', { 'class': 'dim' }, 'move: WASD / arrows or drag on the canvas · attack: automatic · quit: Esc or Q'));
+  curLog = h('div', { 'class': 'glog' });
+  curRes.appendChild(curLog);
+  curRes.appendChild(gbox);
+  block.appendChild(curRes);
+  out.appendChild(block);
+
+  gameOn = true;
+  input.value = '';
+  input.disabled = true;
+  input.placeholder = 'game running · Esc or Q quits';
+  try { input.blur(); } catch (e) { /* ignore */ }
+  gResize();
+  updateStatus(true);
+  focusGame();
+  lastT = performance.now();
+  if (!rafId) rafId = window.requestAnimationFrame(frame);
+  if (opts.scroll !== false) {
+    window.requestAnimationFrame(function () {
+      gStat.scrollIntoView({ block: 'end', behavior: reduced.matches ? 'auto' : 'smooth' });
+    });
+  }
+}
+
+function releaseInput() { gkeys = {}; joy.active = false; joy.id = null; }
+
+function quitGame(silent) {
+  if (!gameOn) return;
+  gameOn = false;
+  if (rafId) { window.cancelAnimationFrame(rafId); rafId = 0; }
+  releaseInput();
+  if (G && (G.state === 'play' || G.state === 'paused')) G.state = 'ready';
+  if (gbox.parentNode) gbox.parentNode.removeChild(gbox);
+  if (!silent && curLog) {
+    curLog.appendChild(h('div', { 'class': 'dim' }, 'game exited — type ', cmdLink('play', 'play'), ' to resume or ', cmdLink('help', 'help')));
+  }
+  input.disabled = false;
+  input.placeholder = 'type help';
+  refocus();
+}
+
+/* print into the log above the canvas without making the canvas jump */
+function gamePrint(node) {
+  var before = gbox.isConnected ? gbox.getBoundingClientRect().top : null;
+  curLog.appendChild(node);
+  if (before !== null) {
+    var d = gbox.getBoundingClientRect().top - before;
+    if (Math.abs(d) > 0.5) window.scrollBy(0, d);
+  }
+}
+function revealWithCanvas(node) {
+  window.requestAnimationFrame(function () {
+    if (!gbox.isConnected) return;
+    var top = node.getBoundingClientRect().top, bottom = gStat.getBoundingClientRect().bottom, vh = window.innerHeight;
+    var dy = 0;
+    if (bottom - top + 16 <= vh) {
+      if (top < 8) dy = top - 8;
+      else if (bottom > vh - 8) dy = bottom - (vh - 8);
+    } else dy = top - 8;
+    if (Math.abs(dy) > 1) window.scrollBy({ top: dy, behavior: reduced.matches ? 'auto' : 'smooth' });
+  });
+}
+
+function printChapter(i) {
+  var ch = CHAPTERS[i];
+  var node = h('div', { 'class': 'gch' },
+    h('div', null, h('span', { 'class': 'gtag' }, '[LV ' + (i + 2) + ']'), ' ', h('span', { 'class': 'dim' }, 'unlocked: '),
+      h('span', { 'class': 'gname' }, ch.title), ' (' + ch.tag + ')'),
+    bullets(ch.facts));
+  gamePrint(node);
+  revealWithCanvas(node);
+}
+function printBossIntro() {
+  var e = CV.experience[0];
+  gamePrint(h('div', { 'class': 'gch' },
+    h('div', null, h('span', { 'class': 'gtag boss' }, '[BOSS]'), ' ', h('span', { 'class': 'gname' }, 'backend.service'),
+      h('span', { 'class': 'dim' }, ' · ' + lcFirst(CV.backend_case.title) + ', ' + e.dates)),
+    h('div', { 'class': 'dim' }, 'each phase it loses prints one before → after metric')));
+}
+function printPhase(i) {
+  var list = CV.backend_case.before_after, m = metricText(list[i]);
+  gamePrint(h('div', null, h('span', { 'class': 'gtag boss' }, '[' + (i + 1) + '/' + list.length + ']'), ' ', m.name + ': ',
+    h('span', { 'class': 'gval' }, m.before), ' → ', h('span', { 'class': 'g-hp' }, m.after)));
+  G.msg = (i + 1) + '/' + list.length + ' ' + m.name + ': ' + m.before + ' → ' + m.after;
+  G.msgT = 3;
+}
+function fmtTime(sec) { var s = Math.max(0, Math.round(sec)); return pad2(Math.floor(s / 60)) + ':' + pad2(s % 60); }
+
+function finishRun() {
+  var t = G.t;
+  G.state = 'done';
+  gamePrint(h('div', { 'class': 'gch' },
+    h('div', null, h('span', { 'class': 'gtag boss' }, '[DONE]'), ' backend.service is down. ', h('span', { 'class': 'dim' }, 'load test: '), CV.backend_case.load_test)));
+  var last = h('div', null, h('span', { 'class': 'gname' }, 'run complete in ' + fmtTime(t)), h('span', { 'class': 'dim' }, ' · all ' + CHAPTERS.length + ' chapters unlocked'));
+  curLog.appendChild(last);
+  quitGame(true);
+  run('summary', { record: false, scroll: false });
+  run('contact', { record: false, scroll: false });
+  window.requestAnimationFrame(function () {
+    last.scrollIntoView({ block: 'start', behavior: reduced.matches ? 'auto' : 'smooth' });
+  });
+}
+
+function advance() {
+  if (!G) return;
+  if (G.state === 'card') {
+    if (G.pendingBoss) { G.pendingBoss = false; spawnBoss(); printBossIntro(); }
+    G.state = 'play';
+  } else if (G.state === 'paused' || G.state === 'ready') {
+    G.state = 'play';
+  }
+}
+function autoPause() {
+  releaseInput();
+  if (gameOn && G && G.state === 'play') G.state = 'paused';
+}
+
+/* ---------- sizing: world units scale with the canvas so phones play like desktops ---------- */
+function gResize() {
+  if (!gameOn) return;
+  var r = gwrap.getBoundingClientRect();
+  if (r.width < 2 || r.height < 2) return;
+  var oW = WW, oH = WH;
+  gdpr = Math.min(window.devicePixelRatio || 1, 2.5);
+  W = r.width; H = r.height;
+  U = clampN(Math.min(W, H) / 480, 0.6, 1.2);
+  WW = W / U; WH = H / U;
+  gcanvas.width = Math.round(W * gdpr); gcanvas.height = Math.round(H * gdpr);
+  if (G) {
+    var P = G.P;
+    if (P.x === null || !oW) { P.x = WW / 2; P.y = WH / 2; }
+    else if (Math.abs(oW - WW) > 0.5 || Math.abs(oH - WH) > 0.5) {
+      var kx = WW / oW, ky = WH / oH;
+      var all = [P].concat(G.enemies, G.shots, G.gems, G.fades, G.bullets, G.boss ? [G.boss] : [], G.drone ? [G.drone] : []);
+      all.forEach(function (o) { o.x *= kx; o.y *= ky; });
+    }
+    P.x = clampN(P.x, P.r, WW - P.r); P.y = clampN(P.y, P.r, WH - P.r);
+  }
+  render();
+}
+if (window.ResizeObserver) new ResizeObserver(gResize).observe(gwrap);
+window.addEventListener('resize', gResize);
+
+/* ---------- input ---------- */
+document.addEventListener('keydown', function (e) {
+  if (!gameOn) return;
+  var k = (e.key || '').toLowerCase();
+  var onCtl = e.target && e.target.closest && e.target.closest('a, button');
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (k === 'escape' || k === 'q') { e.preventDefault(); quitGame(false); return; }
+  if (MOVE[k]) {
+    gkeys[k] = true; e.preventDefault();
+    if (G.state === 'ready' || G.state === 'paused') G.state = 'play';
+    return;
+  }
+  if ((k === 'enter' || k === ' ' || k === 'spacebar') && !onCtl) { e.preventDefault(); advance(); }
+});
+document.addEventListener('keyup', function (e) { delete gkeys[(e.key || '').toLowerCase()]; });
+
+function localPt(e) { var r = gcanvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+gcanvas.addEventListener('pointerdown', function (e) {
+  if (!gameOn || !G) return;
+  focusGame();
+  e.preventDefault();
+  if (G.state === 'card' || G.state === 'paused') { advance(); return; }
+  if (G.state === 'ready') G.state = 'play';
+  if (G.state !== 'play') return;
+  var p = localPt(e);
+  joy.active = true; joy.id = e.pointerId; joy.ox = joy.x = p.x; joy.oy = joy.y = p.y;
+  try { gcanvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+});
+gcanvas.addEventListener('pointermove', function (e) {
+  if (!joy.active || e.pointerId !== joy.id) return;
+  var p = localPt(e); joy.x = p.x; joy.y = p.y;
+});
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (t) {
+  gcanvas.addEventListener(t, function (e) { if (e.pointerId === joy.id) { joy.active = false; joy.id = null; } });
+});
+gcanvas.addEventListener('contextmenu', function (e) { if (gameOn) e.preventDefault(); });
+document.addEventListener('visibilitychange', function () { if (document.hidden) autoPause(); });
+window.addEventListener('blur', autoPause);
+
+/* ---------- entities ---------- */
+function spawnEnemy() {
+  var side = Math.floor(Math.random() * 4), m = 20, x, y;
+  if (side === 0) { x = Math.random() * WW; y = -m; }
+  else if (side === 1) { x = WW + m; y = Math.random() * WH; }
+  else if (side === 2) { x = Math.random() * WW; y = WH + m; }
+  else { x = -m; y = Math.random() * WH; }
+  var tough = Math.random() < Math.min(0.06 * (G.level - 1), 0.3);
+  G.enemies.push(tough
+    ? { x: x, y: y, r: 11, hp: 3, kind: 1, ch: '#', spd: 50 + Math.random() * 12, seed: Math.random() * 9, flash: 0, orbCd: 0, dead: false }
+    : { x: x, y: y, r: 9, hp: 1, kind: 0, ch: BUG_CH[Math.floor(Math.random() * BUG_CH.length)], spd: 64 + Math.random() * 22, seed: Math.random() * 9, flash: 0, orbCd: 0, dead: false });
+}
+function spawnBoss() {
+  G.boss = { x: WW / 2, y: -40, hw: 86, hh: 26, hp: BOSS_HP, max: BOSS_HP, ring: 2.2, flash: 0, orbCd: 0 };
+}
+/* distance from a circle centre to the boss box, squared */
+function bossD2(x, y) {
+  var B = G.boss;
+  var dx = Math.max(Math.abs(x - B.x) - B.hw, 0), dy = Math.max(Math.abs(y - B.y) - B.hh, 0);
+  return dx * dx + dy * dy;
+}
+function nearest(x, y) {
+  var best = null, bd = Infinity;
+  for (var i = 0; i < G.enemies.length; i++) {
+    var e = G.enemies[i];
+    if (e.dead || e.x < -6 || e.y < -6 || e.x > WW + 6 || e.y > WH + 6) continue;
+    var d = (e.x - x) * (e.x - x) + (e.y - y) * (e.y - y);
+    if (d < bd) { bd = d; best = e; }
+  }
+  if (G.boss && G.boss.y > 0 && bossD2(x, y) < bd) best = G.boss;
+  return best;
+}
+function fire(fx, fy, target, count) {
+  var a0 = Math.atan2(target.y - fy, target.x - fx), pw = !!G.ups.power;
+  for (var i = 0; i < count; i++) {
+    var a = a0 + (count > 1 ? (i - (count - 1) / 2) * 0.18 : 0);
+    G.shots.push({ x: fx, y: fy, vx: Math.cos(a) * 520, vy: Math.sin(a) * 520, r: pw ? 5.5 : 3.5,
+      dmg: pw ? 2 : 1, pierce: G.ups.pierce ? 1 : 0, life: 1.3, hit: [], dead: false });
+  }
+}
+function hurtEnemy(e, d) {
+  e.hp -= d; e.flash = 0.08;
+  if (e.hp <= 0 && !e.dead) {
+    e.dead = true;
+    G.gems.push({ x: e.x, y: e.y, v: e.kind ? 2 : 1, pull: false, dead: false });
+    if (!reduced.matches) G.fades.push({ x: e.x, y: e.y, ch: e.ch, c: e.kind ? GC['bug-2'] : GC.bug, life: 0.3 });
+  }
+}
+function hurtBoss(d) {
+  var B = G.boss; if (!B) return;
+  B.hp -= d; B.flash = 0.06;
+  var n = CV.backend_case.before_after.length;
+  var reached = B.hp <= 0 ? n : Math.min(n - 1, Math.floor((1 - B.hp / B.max) * n + 1e-6));
+  while (G.phase < reached) { printPhase(G.phase); G.phase++; }
+  if (B.hp <= 0) {
+    G.enemies.forEach(function (e) { if (!reduced.matches) G.fades.push({ x: e.x, y: e.y, ch: e.ch, c: GC.bug, life: 0.3 }); });
+    G.enemies = []; G.bullets = []; G.boss = null; G.won = true; G.winT = 1.2;
+    G.msg = 'backend.service is down'; G.msgT = 2;
+    if (!reduced.matches) G.shake = 5;
+  }
+}
+
+/* ---------- update (world units, delta time) ---------- */
+function update(dt) {
+  G.t += dt;
+  var P = G.P, i, j, e, s, b;
+
+  if (G.winT > 0) {
+    G.winT -= dt;
+    if (G.winT <= 0) { finishRun(); return; }
+  }
+
+  var mx = 0, my = 0;
+  if (gkeys.a || gkeys.arrowleft) mx -= 1;
+  if (gkeys.d || gkeys.arrowright) mx += 1;
+  if (gkeys.w || gkeys.arrowup) my -= 1;
+  if (gkeys.s || gkeys.arrowdown) my += 1;
+  if (joy.active) {
+    var jx = joy.x - joy.ox, jy = joy.y - joy.oy, jl = Math.hypot(jx, jy);
+    if (jl > 6) { var jm = Math.min(jl / 48, 1); mx += jx / jl * jm; my += jy / jl * jm; }
+  }
+  var ml = Math.hypot(mx, my);
+  if (ml > 1) { mx /= ml; my /= ml; }
+  P.x = clampN(P.x + mx * 230 * dt, P.r, WW - P.r);
+  P.y = clampN(P.y + my * 230 * dt, P.r, WH - P.r);
+  if (ml > 0.1) P.facing = Math.atan2(my, mx);
+
+  var areaF = clampN((WW * WH) / (820 * 560), 0.8, 1.3);
+  if (!G.won) {
+    var maxE = Math.round(40 * areaF);
+    var rate = (G.boss ? 0.8 : 1.1 + G.t * 0.03 + (G.level - 1) * 0.22) * areaF;
+    G.spawnAcc += rate * dt;
+    while (G.spawnAcc >= 1) { G.spawnAcc -= 1; if (G.enemies.length < maxE) spawnEnemy(); }
+  }
+
+  P.fire -= dt;
+  if (P.fire <= 0) {
+    var tg = nearest(P.x, P.y);
+    if (tg) { P.fire = 0.5 / (G.ups.rate ? 1.35 : 1); fire(P.x, P.y, tg, G.ups.twin ? 2 : 1); }
+    else P.fire = 0;
+  }
+
+  if (G.ups.drone) {
+    if (!G.drone) G.drone = { x: P.x, y: P.y, fire: 0.4 };
+    var D = G.drone;
+    var tx = P.x - Math.cos(P.facing) * 30 + Math.cos(G.t * 2) * 8, ty = P.y - Math.sin(P.facing) * 30 + Math.sin(G.t * 2) * 8;
+    var kk = 1 - Math.pow(0.002, dt);
+    D.x += (tx - D.x) * kk; D.y += (ty - D.y) * kk;
+    D.fire -= dt;
+    if (D.fire <= 0) { var dt2 = nearest(D.x, D.y); if (dt2) { D.fire = 0.7; fire(D.x, D.y, dt2, 1); } else D.fire = 0; }
+  }
+
+  if (G.ups.orbit) {
+    P.orbA += dt * 3.2;
+    for (var o = 0; o < 2; o++) {
+      var oa = P.orbA + o * Math.PI, ox = P.x + Math.cos(oa) * 46, oy = P.y + Math.sin(oa) * 46;
+      for (i = 0; i < G.enemies.length; i++) {
+        e = G.enemies[i];
+        if (e.dead || e.orbCd > 0) continue;
+        if (Math.hypot(e.x - ox, e.y - oy) < e.r + 7) { e.orbCd = 0.35; hurtEnemy(e, G.ups.power ? 2 : 1); }
+      }
+      if (G.boss && G.boss.orbCd <= 0 && bossD2(ox, oy) < 49) { G.boss.orbCd = 0.35; hurtBoss(1); }
+    }
+  }
+
+  for (i = 0; i < G.shots.length; i++) {
+    s = G.shots[i];
+    s.x += s.vx * dt; s.y += s.vy * dt; s.life -= dt;
+    if (s.life <= 0 || s.x < -20 || s.y < -20 || s.x > WW + 20 || s.y > WH + 20) { s.dead = true; continue; }
+    for (j = 0; j < G.enemies.length; j++) {
+      e = G.enemies[j];
+      if (e.dead || s.hit.indexOf(e) >= 0) continue;
+      var ddx = e.x - s.x, ddy = e.y - s.y, rr = e.r + s.r;
+      if (ddx * ddx + ddy * ddy < rr * rr) {
+        hurtEnemy(e, s.dmg); s.hit.push(e);
+        if (s.pierce-- <= 0) { s.dead = true; break; }
+      }
+    }
+    if (!s.dead && G.boss && s.hit.indexOf(G.boss) < 0 && bossD2(s.x, s.y) < s.r * s.r) {
+      s.hit.push(G.boss); s.dead = true; hurtBoss(s.dmg);
+    }
+  }
+  G.shots = G.shots.filter(function (x) { return !x.dead; });
+
+  var touching = 0, list = G.enemies;
+  for (i = 0; i < list.length; i++) {
+    e = list[i];
+    if (e.dead) continue;
+    e.flash -= dt; e.orbCd -= dt;
+    var dx = P.x - e.x, dy = P.y - e.y, d = Math.hypot(dx, dy) || 0.01;
+    var a = Math.atan2(dy, dx) + Math.sin(G.t * 3 + e.seed) * 0.35;
+    e.x += Math.cos(a) * e.spd * dt; e.y += Math.sin(a) * e.spd * dt;
+    var min = P.r + e.r;
+    if (d < min) { touching++; e.x = P.x - dx / d * min; e.y = P.y - dy / d * min; }
+  }
+  for (i = 0; i < list.length; i++) {
+    var ea = list[i]; if (ea.dead) continue;
+    for (j = i + 1; j < list.length; j++) {
+      var eb = list[j]; if (eb.dead) continue;
+      var sx = eb.x - ea.x, sy = eb.y - ea.y, sr = ea.r + eb.r, d2 = sx * sx + sy * sy;
+      if (d2 < sr * sr && d2 > 0.0001) {
+        var sd = Math.sqrt(d2), push = (sr - sd) * 0.5;
+        ea.x -= sx / sd * push; ea.y -= sy / sd * push; eb.x += sx / sd * push; eb.y += sy / sd * push;
+      }
+    }
+  }
+  G.enemies = list.filter(function (x) { return !x.dead; });
+
+  var dmg = Math.min(touching * 6, 16);
+  var B = G.boss;
+  if (B) {
+    B.flash -= dt; B.orbCd -= dt; B.ring -= dt;
+    var bx = P.x - B.x, by = P.y - B.y, bd = Math.hypot(bx, by) || 1;
+    var sp = B.y < B.hh + 12 ? 110 : 44;
+    B.x += bx / bd * sp * dt; B.y += by / bd * sp * dt;
+    B.x = clampN(B.x, B.hw * 0.5, WW - B.hw * 0.5);
+    if (bossD2(P.x, P.y) < P.r * P.r) dmg += 14;
+    if (B.ring <= 0 && B.y > 0) {
+      B.ring = 2.6;
+      var n = 10, off = Math.random() * Math.PI;
+      for (i = 0; i < n; i++) {
+        var ba = off + i * Math.PI * 2 / n;
+        G.bullets.push({ x: B.x, y: B.y, vx: Math.cos(ba) * 112, vy: Math.sin(ba) * 112, r: 5, life: 7, dead: false });
+      }
+    }
+  }
+  dmg *= dt;
+  for (i = 0; i < G.bullets.length; i++) {
+    b = G.bullets[i];
+    b.x += b.vx * dt; b.y += b.vy * dt; b.life -= dt;
+    if (b.life <= 0 || b.x < -20 || b.y < -20 || b.x > WW + 20 || b.y > WH + 20) { b.dead = true; continue; }
+    if (Math.hypot(b.x - P.x, b.y - P.y) < b.r + P.r) { b.dead = true; dmg += 7; if (!reduced.matches) G.shake = 2.5; }
+  }
+  G.bullets = G.bullets.filter(function (x) { return !x.dead; });
+
+  if (P.inv > 0) { P.inv -= dt; dmg = 0; }
+  if (dmg > 0) {
+    P.hp -= dmg; P.hurtT = 0;
+    if (!reduced.matches) G.shake = Math.max(G.shake, 1);
+  } else {
+    P.hurtT += dt;
+    if (P.hurtT > 1.5) P.hp = Math.min(P.maxHp, P.hp + 5 * dt);
+  }
+  if (P.hp <= 0) {
+    /* instant continue: full HP, nearby bugs cleared, level and chapters kept */
+    P.hp = P.maxHp; P.hurtT = 9; P.inv = 1.6;
+    G.enemies = G.enemies.filter(function (x) { return Math.hypot(x.x - P.x, x.y - P.y) >= 190; });
+    G.bullets = [];
+    G.msg = 'HP 0 · progress kept · continuing'; G.msgT = 2.2;
+  }
+
+  var mag = 115 + (G.level >= 4 ? 35 : 0);
+  for (i = 0; i < G.gems.length; i++) {
+    var g = G.gems[i];
+    var gx = P.x - g.x, gy = P.y - g.y, gd = Math.hypot(gx, gy) || 0.01;
+    if (gd < P.r + 7) { g.dead = true; G.xp += g.v; continue; }
+    if (g.pull || gd < mag) { g.pull = true; g.x += gx / gd * 380 * dt; g.y += gy / gd * 380 * dt; }
+  }
+  G.gems = G.gems.filter(function (x) { return !x.dead; });
+
+  for (i = 0; i < G.fades.length; i++) G.fades[i].life -= dt;
+  G.fades = G.fades.filter(function (x) { return x.life > 0; });
+
+  if (!G.bossPhase && G.xp >= G.need) {
+    G.xp -= G.need; G.level++;
+    var ci = G.level - 2;
+    G.need = NEEDS[ci + 1] || 999;
+    G.ups[CHAPTERS[ci].up] = true;
+    G.card = ci;
+    if (ci === CHAPTERS.length - 1) { G.bossPhase = true; G.pendingBoss = true; G.xp = 0; }
+    G.state = 'card';
+    releaseInput();
+    printChapter(ci);
+  }
+}
+
+/* ---------- render: glyphs with fillText, faint dot grid ---------- */
+function setFont(size, weight) { gctx.font = (weight || 700) + ' ' + size + 'px ' + MONO; }
+function noticeBox(lines) {
+  /* lines: [{t, c, b}] drawn centred in screen space on a scrim panel */
+  var c = gctx, size = W < 420 ? 12.5 : 14, lh = size * 1.55, i, wmax = 0;
+  for (var pass = 0; pass < 2; pass++) {
+    wmax = 0;
+    for (i = 0; i < lines.length; i++) { setFont(size, lines[i].b ? 700 : 500); wmax = Math.max(wmax, c.measureText(lines[i].t).width); }
+    if (wmax <= W - 40 || pass) break;
+    size = Math.max(10, size * (W - 40) / wmax); lh = size * 1.55;
+  }
+  var bw = Math.min(W - 16, wmax + 32), bh = lines.length * lh + 18, x0 = (W - bw) / 2, y0 = (H - bh) / 2;
+  c.fillStyle = GC.scrim; c.fillRect(x0, y0, bw, bh);
+  c.strokeStyle = GC.line; c.lineWidth = 1; c.strokeRect(x0 + 0.5, y0 + 0.5, bw - 1, bh - 1);
+  for (i = 0; i < lines.length; i++) {
+    setFont(size, lines[i].b ? 700 : 500);
+    c.fillStyle = lines[i].c || GC.fg;
+    c.fillText(lines[i].t, W / 2, y0 + 9 + lh * (i + 0.5));
+  }
+}
+function render() {
+  if (!W || !G) return;
+  var c = gctx, rm = reduced.matches, i;
+  c.setTransform(gdpr, 0, 0, gdpr, 0, 0);
+  c.fillStyle = GC.bg; c.fillRect(0, 0, W, H);
+  var shx = 0, shy = 0;
+  if (G.shake > 0 && !rm) { shx = (Math.random() - 0.5) * G.shake * 2; shy = (Math.random() - 0.5) * G.shake * 2; }
+  c.setTransform(gdpr * U, 0, 0, gdpr * U, shx * gdpr, shy * gdpr);
+  c.textAlign = 'center'; c.textBaseline = 'middle';
+
+  c.fillStyle = GC.grid;
+  var gs = 24;
+  for (var gx = gs / 2; gx < WW; gx += gs) for (var gy = gs / 2; gy < WH; gy += gs) c.fillRect(gx - 0.8, gy - 0.8, 1.6, 1.6);
+
+  var P = G.P;
+  if (P.x === null) return;
+
+  setFont(16);
+  c.fillStyle = GC.amber;
+  for (i = 0; i < G.gems.length; i++) { var g = G.gems[i]; if (g.v > 1) continue; c.fillText('+', g.x, g.y); }
+  setFont(21);
+  for (i = 0; i < G.gems.length; i++) { var g2 = G.gems[i]; if (g2.v > 1) c.fillText('+', g2.x, g2.y); }
+
+  for (i = 0; i < G.fades.length; i++) {
+    var f = G.fades[i];
+    c.globalAlpha = clampN(f.life / 0.3, 0, 1) * 0.6; c.fillStyle = f.c; setFont(19); c.fillText(f.ch, f.x, f.y);
+  }
+  c.globalAlpha = 1;
+
+  setFont(20);
+  for (i = 0; i < G.enemies.length; i++) {
+    var e = G.enemies[i];
+    if (e.kind) continue;
+    c.fillStyle = e.flash > 0 ? GC.fg : GC.bug; c.fillText(e.ch, e.x, e.y);
+  }
+  setFont(23);
+  for (i = 0; i < G.enemies.length; i++) {
+    var e2 = G.enemies[i];
+    if (!e2.kind) continue;
+    c.fillStyle = e2.flash > 0 ? GC.fg : GC['bug-2']; c.fillText(e2.ch, e2.x, e2.y);
+  }
+
+  var B = G.boss;
+  if (B) {
+    c.fillStyle = GC.panel; c.fillRect(B.x - B.hw, B.y - B.hh, B.hw * 2, B.hh * 2);
+    c.strokeStyle = B.flash > 0 ? GC.fg : GC['bug-2']; c.lineWidth = 1.5;
+    c.strokeRect(B.x - B.hw, B.y - B.hh, B.hw * 2, B.hh * 2);
+    setFont(16); c.fillStyle = B.flash > 0 ? GC['bug-2'] : GC.fg; c.fillText('backend.service', B.x, B.y - 9);
+    var cells = 12, k = clampN(Math.ceil(B.hp / B.max * cells), 0, cells);
+    setFont(14, 500); c.fillStyle = GC['bug-2']; c.fillText('[' + rep('#', k) + rep('-', cells - k) + ']', B.x, B.y + 11);
+  }
+
+  setFont(16); c.fillStyle = GC['bug-2'];
+  for (i = 0; i < G.bullets.length; i++) c.fillText('•', G.bullets[i].x, G.bullets[i].y);
+
+  c.fillStyle = GC['accent-hi'];
+  setFont(G.ups.power ? 21 : 16);
+  for (i = 0; i < G.shots.length; i++) c.fillText(G.ups.pierce ? '-' : '*', G.shots[i].x, G.shots[i].y);
+
+  if (G.ups.orbit) {
+    setFont(17); c.fillStyle = GC.accent;
+    for (var o = 0; o < 2; o++) {
+      var oa = P.orbA + o * Math.PI;
+      c.fillText('o', P.x + Math.cos(oa) * 46, P.y + Math.sin(oa) * 46);
+    }
+  }
+  if (G.drone) { setFont(18); c.fillStyle = GC.accent; c.fillText('¤', G.drone.x, G.drone.y); }
+
+  var blink = P.inv > 0 ? (rm ? 0.55 : (Math.floor(G.t * 10) % 2 ? 0.35 : 0.9)) : 1;
+  c.globalAlpha = blink;
+  setFont(25); c.fillStyle = P.hurtT < 0.12 ? GC.err : GC['accent-hi']; c.fillText('@', P.x, P.y);
+  c.globalAlpha = 1;
+
+  /* screen-space overlays */
+  c.setTransform(gdpr, 0, 0, gdpr, 0, 0);
+  c.textAlign = 'center'; c.textBaseline = 'middle';
+  if (joy.active) {
+    var jx = joy.x - joy.ox, jy = joy.y - joy.oy, jl = Math.hypot(jx, jy), jk = jl > 48 ? 48 / jl : 1;
+    c.globalAlpha = 0.5; c.strokeStyle = GC.dim; c.lineWidth = 1.5;
+    c.beginPath(); c.arc(joy.ox, joy.oy, 48, 0, Math.PI * 2); c.stroke();
+    c.globalAlpha = 0.8; setFont(18); c.fillStyle = GC.accent; c.fillText('+', joy.ox + jx * jk, joy.oy + jy * jk);
+    c.globalAlpha = 1;
+  }
+  if (G.msgT > 0 && G.state === 'play') {
+    var ms = W < 420 ? 11.5 : 13;
+    setFont(ms, 500);
+    var mw = c.measureText(G.msg).width;
+    if (mw > W - 24) { ms = Math.max(9, ms * (W - 24) / mw); setFont(ms, 500); mw = c.measureText(G.msg).width; }
+    c.globalAlpha = rm ? 1 : clampN(G.msgT / 0.4, 0, 1);
+    c.fillStyle = GC.scrim; c.fillRect((W - mw) / 2 - 8, H - 30, mw + 16, 22);
+    c.fillStyle = GC.amber; c.fillText(G.msg, W / 2, H - 19);
+    c.globalAlpha = 1;
+  }
+  if (G.state === 'ready') {
+    noticeBox([
+      { t: G.level > 1 || G.bossPhase ? 'career.run · resumed' : 'career.run', c: GC['accent-hi'], b: true },
+      { t: 'move to start: WASD / arrows / drag', c: GC.fg },
+      { t: 'Esc or Q quits', c: GC.dim }
+    ]);
+  } else if (G.state === 'card') {
+    var ch = CHAPTERS[G.card];
+    noticeBox([
+      { t: '[LV ' + (G.card + 2) + '] ' + ch.title, c: GC.amber, b: true },
+      { t: 'upgrade: ' + ch.upName, c: GC['accent-hi'] },
+      G.pendingBoss ? { t: 'next: boss backend.service', c: GC['bug-2'] } : { t: 'chapter printed above', c: GC.dim },
+      { t: 'press Enter or tap to continue', c: GC.fg, b: true }
+    ]);
+  } else if (G.state === 'paused') {
+    noticeBox([
+      { t: 'paused', c: GC.amber, b: true },
+      { t: 'press Enter or tap to resume', c: GC.fg }
+    ]);
+  }
+}
+
+var lastStatus = '';
+function updateStatus(force) {
+  if (!G) return;
+  var P = G.P, hpN = 8, hpF = clampN(Math.ceil(P.hp / P.maxHp * hpN), 0, hpN);
+  var xpL, xpT;
+  if (G.bossPhase) {
+    var f = G.boss ? G.boss.hp / G.boss.max : (G.won ? 0 : 1), kc = clampN(Math.ceil(f * 10), 0, 10);
+    xpL = '  BOSS '; xpT = '[' + rep('#', kc) + rep('-', 10 - kc) + ']';
+  } else {
+    var xc = clampN(Math.floor(G.xp / G.need * 10), 0, 10);
+    xpL = '  XP '; xpT = '[' + rep('#', xc) + rep('-', 10 - xc) + ']';
+  }
+  var hpT = rep('█', hpF) + rep('░', hpN - hpF), lvT = String(G.level);
+  var key = hpT + lvT + xpL + xpT;
+  if (!force && key === lastStatus) return;
+  lastStatus = key;
+  gHp.textContent = hpT; gLv.textContent = lvT; gXpL.textContent = xpL; gXp.textContent = xpT;
+}
+
+function frame(now) {
+  if (!gameOn) { rafId = 0; return; }
+  var dt = Math.min(0.05, Math.max(0, (now - lastT) / 1000));
+  lastT = now;
+  if (G.state === 'play') update(dt);
+  if (!gameOn) { rafId = 0; return; }
+  G.shake = Math.max(0, G.shake - dt * 12);
+  if (G.msgT > 0 && G.state === 'play') G.msgT -= dt;
+  render();
+  updateStatus(false);
+  rafId = window.requestAnimationFrame(frame);
+}
+
+/* ---------- wiring ---------- */
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  var v = input.value;
+  input.value = '';
+  run(v);
+});
+
+input.addEventListener('keydown', function (e) {
+  if (e.key === 'Tab' && !e.shiftKey && input.value.trim() !== '') {
+    e.preventDefault();
+    complete();
+  } else if (e.key === 'ArrowUp') {
+    if (!history.length) return;
+    e.preventDefault();
+    if (hIndex === history.length) draft = input.value;
+    hIndex = Math.max(0, hIndex - 1);
+    input.value = history[hIndex];
+    moveEnd();
+  } else if (e.key === 'ArrowDown') {
+    if (hIndex >= history.length) return;
+    e.preventDefault();
+    hIndex++;
+    input.value = hIndex === history.length ? draft : history[hIndex];
+    moveEnd();
+  } else if ((e.key === 'l' || e.key === 'L') && e.ctrlKey) {
+    e.preventDefault();
+    run('clear', { record: false });
+  }
+});
+function moveEnd() {
+  var n = input.value.length;
+  window.requestAnimationFrame(function () { try { input.setSelectionRange(n, n); } catch (e) { /* ignore */ } });
+}
+
+chipsEl.appendChild(h('button', { type: 'button', 'class': 'chip play', 'aria-label': 'play: run the career as a game', onclick: function () { run('play'); refocus(); } }, 'play'));
+MAIN.concat(['clear']).forEach(function (c) {
+  chipsEl.appendChild(h('button', { type: 'button', 'class': 'chip', onclick: function () { run(c); refocus(); } }, c));
+});
+
+document.getElementById('term').addEventListener('click', function (e) {
+  if (gameOn) {
+    if (e.target.closest('a, button, input, .scroll, .gbox')) return;
+    var gs = window.getSelection();
+    if (gs && String(gs).length) return;
+    focusGame();
+    return;
+  }
+  if (!finePointer.matches) return;
+  if (e.target.closest('a, button, input, .scroll')) return;
+  var sel = window.getSelection();
+  if (sel && String(sel).length) return;
+  refocus();
+});
+
+run('whoami', { record: false, scroll: false, boot: !reduced.matches, intro: true });
+refocus();
+})();
+</script>
+
+</body>
+</html>
