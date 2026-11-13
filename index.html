@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR and an AI-assisted game backend.">
+<meta name="description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR, Unity client and game backend.">
 <link rel="canonical" href="https://0xd69736b.github.io/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://0xd69736b.github.io/">
 <meta property="og:title" content="Dmitrii Skumin · Senior Unity Developer">
-<meta property="og:description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR and an AI-assisted game backend.">
+<meta property="og:description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR, Unity client and game backend.">
 <meta property="og:image" content="https://0xd69736b.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -409,7 +409,7 @@ a.contact { font-size: 0.9375rem; }
   var D = {
  "name": "Dmitrii Skumin",
  "title": "Senior Unity Developer",
- "subtitle": "Client-server games · AI-assisted backend",
+ "subtitle": "New games & LiveOps · Client and backend",
  "headline_stats": [
   {
    "value": "10+",
@@ -417,14 +417,14 @@ a.contact { font-size: 0.9375rem; }
   },
   {
    "value": "20+",
-   "label": "projects on mobile, PC and VR"
+   "label": "shipped projects on mobile, PC and VR"
   },
   {
    "value": "120M+",
    "label": "Google Play downloads across titles"
   }
  ],
- "summary": "Unity developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles, including three survivors-like games, plus location-based VR. Lead or sole programmer on most projects since 2018, with LiveOps on games of 100M+ and 10M+ downloads. Most recently designed and led the backend of a client-server F2P game, implemented with Claude Code agents.",
+ "summary": "Senior Unity developer with 10+ years in game development, mostly mobile F2P: casual, hyper-casual and midcore titles with 100M+ and 10M+ downloads, from first prototype through release and LiveOps. Lead or sole programmer on most projects since 2018. Recently designed and led the authoritative backend of a client-server F2P game, so I deliver LiveOps features on both client and server. Also location-based VR and multiplayer projects.",
  "availability": "Ukrainian citizen, based in Europe (CET) · Available immediately · Remote or on-site · Full-time or B2B contract",
  "contacts": {
   "email": "jobs.kindling685@slmails.com",
@@ -435,10 +435,10 @@ a.contact { font-size: 0.9375rem; }
  },
  "experience": [
   {
-   "role": "Backend Developer",
+   "role": "Unity Client & Backend Developer",
    "company": "PamPam Studio",
    "dates": "Jul 2026 – Nov 2026",
-   "context": "F2P survivors-like game (NDA) in soft launch, WebGL and Android. Main backend developer (~89% of backend commits) in a team of two; owned architecture, specs, review and testing, implementation by Claude Code agents."
+   "context": "F2P survivors-like game (NDA) in soft launch, WebGL and Android. Unity client network layer and the game's backend; sole backend developer."
   },
   {
    "role": "Unity Developer",
@@ -455,7 +455,7 @@ a.contact { font-size: 0.9375rem; }
  ],
  "backend_case": {
   "title": "Backend of a client-server F2P survivors-like game (NDA)",
-  "process": "Spec-driven development (SDD): specs came from AI-led interviews in which I made the design decisions; Claude Code agents coded against the specs, OpenAPI contracts and tests, and I reviewed the results.",
+  "process": "Spec-driven development (SDD): I owned architecture, specs, review and testing; Claude Code agents implemented against the specs, OpenAPI contracts and tests.",
   "stack": [
    "NestJS",
    "TypeORM",
@@ -531,13 +531,13 @@ a.contact { font-size: 0.9375rem; }
    "dates": "Jul – Nov 2026",
    "downloads": null,
    "url": null,
-   "role": "Main backend developer",
+   "role": "Unity client & backend developer",
    "bullets": [
-    "Main backend developer (~89% of backend commits) alongside one other developer. Owned architecture, specs, review and testing; Claude Code agents implemented via spec-driven development (SDD), with specs built through AI-led interviews.",
+    "Unity client: moved the game from a mock local API to the server; generated C# contract types, command queue, snapshots with revision-conflict retry, session refresh, maintenance notices, platform SSO and payments.",
     "Authoritative server on NestJS, TypeORM and PostgreSQL: economy, energy, missions, shop and offers, purchases, Battle Pass, remote config and feature gates; 51 modules, 121 OpenAPI operations, ~2,250 unit and 195 integration tests.",
     "Performance: database queries per request cut for bootstrap 63 → 13, mission result 150–200 → 11–14, Battle Pass claim 33 → 8; cold start 6–25 s → 3.4–5.3 s; load test of 600 heavy players at 106 req/s on 4 instances.",
     "Docker images on Cloudflare Workers + Containers across up to 7 environments; OpenTelemetry metrics and SLO alerts; admin API and panel (sole developer); scaled GA4 analytics delivery 6.6 → 41.7 events/s.",
-    "Unity client network layer: moved the game from a mock local API to the server; command queue, snapshots with revision-conflict retry, session refresh, maintenance notices, platform SSO and payments."
+    "Sole backend developer. Spec-driven development (SDD): I owned architecture, specs, review and testing; implementation by Claude Code agents."
    ]
   },
   {
@@ -551,9 +551,9 @@ a.contact { font-size: 0.9375rem; }
    "role": "LiveOps, sole developer",
    "bullets": [
     "Practically the only developer on the project in this period; shipped Android versions 1.9 → 1.23 and an iOS release.",
-    "New features: SuperHit mechanic, helicopter boss fight with rockets and drones, skins merge board with inventory, daily rewards and quests, kill streaks.",
-    "Upgrade economy and balance driven by Remote Config with A/B test groups; Google Play Games sign-in and achievements.",
-    "Projectile and boss-fight pooling and GC fixes: most frame hitches during and after levels disappeared.",
+    "Casual meta and economy: SuperHit mechanic, skins merge board with inventory, daily rewards and quests, kill streaks; upgrade economy and balance driven by Remote Config with A/B test groups.",
+    "Helicopter boss fight with rockets and drones; Google Play Games sign-in and achievements.",
+    "Performance optimization: projectile and boss-fight pooling, GC fixes and code refactoring; most frame hitches during and after levels disappeared.",
     "SDK and engine updates: Unity 6, Android API 36, Firebase, Unity IAP 5, AppsFlyer, Azur Games UCM 6."
    ]
   },
@@ -567,6 +567,7 @@ a.contact { font-size: 0.9375rem; }
    "url": "https://play.google.com/store/apps/details?id=com.squads.survivals",
    "role": "Unity developer",
    "bullets": [
+    "Built from scratch to Google Play release; most active of 6 programmers by code commits.",
     "Squad core: character factory, formations with baked positions, movement and selection, on the Zenject architecture.",
     "Enemies and three bosses (Claws, Mutant Slime, Striker) with Behavior Designer trees: charges, AOE, multishot, bouncing projectiles; elemental enemies.",
     "Save system with MemoryPack and cloud saves (Voxel Busters) via Play Games login.",
@@ -581,9 +582,9 @@ a.contact { font-size: 0.9375rem; }
    "dates": "Oct 2023 – Dec 2025",
    "downloads": "10M+",
    "url": "https://play.google.com/store/apps/details?id=com.stardust.chaossurvive",
-   "role": "LiveOps developer",
+   "role": "LiveOps developer, then lead",
    "bullets": [
-    "Top committer among 12 developers in this period on a live codebase taken over from the original studio.",
+    "One of 3 programmers, then lead programmer when the team became 2; a live codebase taken over from the original studio.",
     "URP optimization for low-end devices: sprite shadows instead of real-time ones, simplified materials and VFX, FPS-driven quality switching; Xiaomi Mi A2 Lite went from 13–15 to 20–22 FPS.",
     "Features: chapters and checkpoints, spin-wheel rewards, a new hero with a turret ultimate, an alternative payment provider behind a purchase abstraction.",
     "Pooled audio system; migration to Unity 6; analytics, ads and attribution SDK updates; editor tools for builds and shaders."
@@ -597,9 +598,9 @@ a.contact { font-size: 0.9375rem; }
    "dates": "Sep 2022 – Dec 2023",
    "downloads": "10M+",
    "url": "https://play.google.com/store/apps/details?id=magic.friends.rainbow",
-   "role": "Lead programmer",
+   "role": "Sole programmer",
    "bullets": [
-    "Lead programmer (~73% of commits) with a level designer and artists; took the game from version 0.0.1 to 1.1.9.",
+    "Sole programmer, working with a level designer and artists; full cycle from first prototype through release and LiveOps (versions 0.0.1 → 1.1.9).",
     "Hand mechanics on Obi Rope physics (stretch, wrap, pierce, fire, ice, thunder hands) and ragdoll enemies with PuppetMaster.",
     "Meta systems: craft lab, boosters, world map, islands with passive income, tutorials; remote-config feature flags and A/B tests.",
     "Ads, IAP and analytics: AppLovin MAX with several networks, Firebase, GameAnalytics, Adjust; Android and iOS release builds; mobile physics optimization."
@@ -947,7 +948,7 @@ a.contact { font-size: 0.9375rem; }
       i: i,
       g: genreGroup(p),
       pl: platformsOf(p),
-      lead: /Lead|Sole|sole|Main/.test(p.role)
+      lead: /lead|sole|main|backend/i.test(p.role)
     });
   });
 

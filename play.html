@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR and an AI-assisted game backend.">
+<meta name="description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR, Unity client and game backend.">
 <link rel="canonical" href="https://0xd69736b.github.io/play.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://0xd69736b.github.io/play.html">
 <meta property="og:title" content="Career Run Shell · Dmitrii Skumin">
-<meta property="og:description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR and an AI-assisted game backend.">
+<meta property="og:description" content="Senior Unity Developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles with 120M+ Google Play downloads, location-based VR, Unity client and game backend.">
 <meta property="og:image" content="https://0xd69736b.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -249,13 +249,22 @@ pre.bars { margin: 0; font: inherit; line-height: 1.5; overflow-wrap: normal; wh
 var CV = {
  "name": "Dmitrii Skumin",
  "title": "Senior Unity Developer",
- "subtitle": "Client-server games · AI-assisted backend",
+ "subtitle": "New games & LiveOps · Client and backend",
  "headline_stats": [
-  { "value": "10+", "label": "years in game development" },
-  { "value": "20+", "label": "projects on mobile, PC and VR" },
-  { "value": "120M+", "label": "Google Play downloads across titles" }
+  {
+   "value": "10+",
+   "label": "years in game development"
+  },
+  {
+   "value": "20+",
+   "label": "shipped projects on mobile, PC and VR"
+  },
+  {
+   "value": "120M+",
+   "label": "Google Play downloads across titles"
+  }
  ],
- "summary": "Unity developer with 10+ years in commercial games: hyper-casual, hybrid-casual and midcore mobile titles, including three survivors-like games, plus location-based VR. Lead or sole programmer on most projects since 2018, with LiveOps on games of 100M+ and 10M+ downloads. Most recently designed and led the backend of a client-server F2P game, implemented with Claude Code agents.",
+ "summary": "Senior Unity developer with 10+ years in game development, mostly mobile F2P: casual, hyper-casual and midcore titles with 100M+ and 10M+ downloads, from first prototype through release and LiveOps. Lead or sole programmer on most projects since 2018. Recently designed and led the authoritative backend of a client-server F2P game, so I deliver LiveOps features on both client and server. Also location-based VR and multiplayer projects.",
  "availability": "Ukrainian citizen, based in Europe (CET) · Available immediately · Remote or on-site · Full-time or B2B contract",
  "contacts": {
   "email": "jobs.kindling685@slmails.com",
@@ -265,134 +274,481 @@ var CV = {
   "linkedin_url": "https://www.linkedin.com/in/dmitrii-skumin-6359241a3"
  },
  "experience": [
-  { "role": "Backend Developer", "company": "PamPam Studio", "dates": "Jul 2026 – Nov 2026",
-    "context": "F2P survivors-like game (NDA) in soft launch, WebGL and Android. Main backend developer (~89% of backend commits) in a team of two; owned architecture, specs, review and testing, implementation by Claude Code agents." },
-  { "role": "Unity Developer", "company": "PamPam Studio", "dates": "2018 – Jul 2026",
-    "context": "Hyper-casual and hybrid-casual mobile games, midcore titles and location-based VR attractions. Lead or sole programmer on most projects." },
-  { "role": "Unity Developer", "company": "Rolling Games", "dates": "2015 – 2018",
-    "context": "Outsourcing studio: client projects for mobile, PC and location-based VR." }
+  {
+   "role": "Unity Client & Backend Developer",
+   "company": "PamPam Studio",
+   "dates": "Jul 2026 – Nov 2026",
+   "context": "F2P survivors-like game (NDA) in soft launch, WebGL and Android. Unity client network layer and the game's backend; sole backend developer."
+  },
+  {
+   "role": "Unity Developer",
+   "company": "PamPam Studio",
+   "dates": "2018 – Jul 2026",
+   "context": "Hyper-casual and hybrid-casual mobile games, midcore titles and location-based VR attractions. Lead or sole programmer on most projects."
+  },
+  {
+   "role": "Unity Developer",
+   "company": "Rolling Games",
+   "dates": "2015 – 2018",
+   "context": "Outsourcing studio: client projects for mobile, PC and location-based VR."
+  }
  ],
  "backend_case": {
   "title": "Backend of a client-server F2P survivors-like game (NDA)",
-  "process": "Spec-driven development (SDD): specs came from AI-led interviews in which I made the design decisions; Claude Code agents coded against the specs, OpenAPI contracts and tests, and I reviewed the results.",
-  "stack": ["NestJS", "TypeORM", "PostgreSQL", "TypeScript", "OpenAPI", "Docker", "Cloudflare Workers + Containers", "OpenTelemetry"],
+  "process": "Spec-driven development (SDD): I owned architecture, specs, review and testing; Claude Code agents implemented against the specs, OpenAPI contracts and tests.",
+  "stack": [
+   "NestJS",
+   "TypeORM",
+   "PostgreSQL",
+   "TypeScript",
+   "OpenAPI",
+   "Docker",
+   "Cloudflare Workers + Containers",
+   "OpenTelemetry"
+  ],
   "scale": [
-   { "value": "51", "label": "server modules" },
-   { "value": "121", "label": "OpenAPI operations" },
-   { "value": "~2,250", "label": "unit tests" },
-   { "value": "195", "label": "integration tests" }
+   {
+    "value": "51",
+    "label": "server modules"
+   },
+   {
+    "value": "121",
+    "label": "OpenAPI operations"
+   },
+   {
+    "value": "~2,250",
+    "label": "unit tests"
+   },
+   {
+    "value": "195",
+    "label": "integration tests"
+   }
   ],
   "before_after": [
-   { "metric": "DB queries per bootstrap request", "before": 63, "after": 13, "unit": "queries" },
-   { "metric": "DB queries per mission result", "before": 175, "before_label": "150–200", "after": 12.5, "after_label": "11–14", "unit": "queries" },
-   { "metric": "DB queries per Battle Pass claim", "before": 33, "after": 8, "unit": "queries" },
-   { "metric": "Server cold start", "before": 15.5, "before_label": "6–25 s", "after": 4.35, "after_label": "3.4–5.3 s", "unit": "s" },
-   { "metric": "Bootstrap payload", "before": 206, "after": 46, "unit": "KB" }
+   {
+    "metric": "DB queries per bootstrap request",
+    "before": 63,
+    "after": 13,
+    "unit": "queries"
+   },
+   {
+    "metric": "DB queries per mission result",
+    "before": 175,
+    "before_label": "150–200",
+    "after": 12.5,
+    "after_label": "11–14",
+    "unit": "queries"
+   },
+   {
+    "metric": "DB queries per Battle Pass claim",
+    "before": 33,
+    "after": 8,
+    "unit": "queries"
+   },
+   {
+    "metric": "Server cold start",
+    "before": 15.5,
+    "before_label": "6–25 s",
+    "after": 4.35,
+    "after_label": "3.4–5.3 s",
+    "unit": "s"
+   },
+   {
+    "metric": "Bootstrap payload",
+    "before": 206,
+    "after": 46,
+    "unit": "KB"
+   }
   ],
   "load_test": "Custom Node.js virtual-player tool: 600 heavy players at 106 req/s on 4 instances; login storms of 600 per minute with 0 errors."
  },
  "projects": [
-  { "studio": "PamPam Studio", "name": "Survivors-like F2P game (NDA)", "genre": "Survivors-like action, F2P, soft launch", "platforms": "WebGL, Android", "dates": "Jul – Nov 2026", "downloads": null, "url": null, "role": "Main backend developer",
-    "bullets": [
-     "Main backend developer (~89% of backend commits) alongside one other developer. Owned architecture, specs, review and testing; Claude Code agents implemented via spec-driven development (SDD), with specs built through AI-led interviews.",
-     "Authoritative server on NestJS, TypeORM and PostgreSQL: economy, energy, missions, shop and offers, purchases, Battle Pass, remote config and feature gates; 51 modules, 121 OpenAPI operations, ~2,250 unit and 195 integration tests.",
-     "Performance: database queries per request cut for bootstrap 63 → 13, mission result 150–200 → 11–14, Battle Pass claim 33 → 8; cold start 6–25 s → 3.4–5.3 s; load test of 600 heavy players at 106 req/s on 4 instances.",
-     "Docker images on Cloudflare Workers + Containers across up to 7 environments; OpenTelemetry metrics and SLO alerts; admin API and panel (sole developer); scaled GA4 analytics delivery 6.6 → 41.7 events/s.",
-     "Unity client network layer: moved the game from a mock local API to the server; command queue, snapshots with revision-conflict retry, session refresh, maintenance notices, platform SSO and payments."
-    ] },
-  { "studio": "PamPam Studio", "name": "Hit Master 3D", "genre": "Hyper-casual action", "platforms": "Android, iOS", "dates": "Oct 2025 – Jun 2026", "downloads": "100M+", "url": "https://play.google.com/store/apps/details?id=com.hit.master", "role": "LiveOps, sole developer",
-    "bullets": [
-     "Practically the only developer on the project in this period; shipped Android versions 1.9 → 1.23 and an iOS release.",
-     "New features: SuperHit mechanic, helicopter boss fight with rockets and drones, skins merge board with inventory, daily rewards and quests, kill streaks.",
-     "Upgrade economy and balance driven by Remote Config with A/B test groups; Google Play Games sign-in and achievements.",
-     "Projectile and boss-fight pooling and GC fixes: most frame hitches during and after levels disappeared.",
-     "SDK and engine updates: Unity 6, Android API 36, Firebase, Unity IAP 5, AppsFlyer, Azur Games UCM 6."
-    ] },
-  { "studio": "PamPam Studio", "name": "Alien Horde: Squad Survival", "genre": "Midcore survivors-like squad action", "platforms": "Android", "dates": "Feb – Oct 2025", "downloads": "5K+", "url": "https://play.google.com/store/apps/details?id=com.squads.survivals", "role": "Unity developer",
-    "bullets": [
-     "Squad core: character factory, formations with baked positions, movement and selection, on the Zenject architecture.",
-     "Enemies and three bosses (Claws, Mutant Slime, Striker) with Behavior Designer trees: charges, AOE, multishot, bouncing projectiles; elemental enemies.",
-     "Save system with MemoryPack and cloud saves (Voxel Busters) via Play Games login.",
-     "Animations, VFX and the whole audio integration for enemies and bosses; Addressables with Play Asset Delivery; Azur Games UCM SDK; UI."
-    ] },
-  { "studio": "PamPam Studio", "name": "Survive Squad", "genre": "Midcore survivors-like shooter / roguelike", "platforms": "Android, iOS", "dates": "Oct 2023 – Dec 2025", "downloads": "10M+", "url": "https://play.google.com/store/apps/details?id=com.stardust.chaossurvive", "role": "LiveOps developer",
-    "bullets": [
-     "Top committer among 12 developers in this period on a live codebase taken over from the original studio.",
-     "URP optimization for low-end devices: sprite shadows instead of real-time ones, simplified materials and VFX, FPS-driven quality switching; Xiaomi Mi A2 Lite went from 13–15 to 20–22 FPS.",
-     "Features: chapters and checkpoints, spin-wheel rewards, a new hero with a turret ultimate, an alternative payment provider behind a purchase abstraction.",
-     "Pooled audio system; migration to Unity 6; analytics, ads and attribution SDK updates; editor tools for builds and shaders."
-    ] },
-  { "studio": "PamPam Studio", "name": "Magic Friends – Color Hands", "genre": "Hybrid-casual physics action", "platforms": "Android, iOS", "dates": "Sep 2022 – Dec 2023", "downloads": "10M+", "url": "https://play.google.com/store/apps/details?id=magic.friends.rainbow", "role": "Lead programmer",
-    "bullets": [
-     "Lead programmer (~73% of commits) with a level designer and artists; took the game from version 0.0.1 to 1.1.9.",
-     "Hand mechanics on Obi Rope physics (stretch, wrap, pierce, fire, ice, thunder hands) and ragdoll enemies with PuppetMaster.",
-     "Meta systems: craft lab, boosters, world map, islands with passive income, tutorials; remote-config feature flags and A/B tests.",
-     "Ads, IAP and analytics: AppLovin MAX with several networks, Firebase, GameAnalytics, Adjust; Android and iOS release builds; mobile physics optimization."
-    ] },
-  { "studio": "PamPam Studio", "name": "Tortilla Game! Slap Challenge", "genre": "Hyper-casual", "platforms": "Android", "dates": "Jul – Nov 2022", "downloads": null, "url": "https://play.google.com/store/apps/details?id=tortilla.game.slap", "role": "Sole programmer",
-    "bullets": [ "Started the project: timing slap bar, rock-paper-scissors rounds, upgrades, cinematic cameras, game-loop UI, publisher SDK." ] },
-  { "studio": "PamPam Studio", "name": "Ragdoll Flying Runner", "genre": "Hyper-casual", "platforms": "Android, iOS", "dates": "Mar – May 2022", "downloads": null, "url": "https://play.google.com/store/apps/details?id=ragdoll.fly.runner", "role": "Main developer",
-    "bullets": [ "Turned an earlier prototype into a runner: road generation, sword and ragdoll physics, prop spawner, weapon booster and shop, publisher SDK." ] },
-  { "studio": "PamPam Studio", "name": "Diamond Land", "genre": "Casual 3D", "platforms": "Android (no longer on Google Play)", "dates": "Feb – Jun 2022", "downloads": null, "url": null, "role": "Sole programmer",
-    "bullets": [ "Started the project: procedural seed-based underground, digging and tree cutting, ground/underground camera switch, production machines, saves, analytics SDKs." ] },
-  { "studio": "PamPam Studio", "name": "Plank PvP", "genre": "Location-based VR multiplayer shooter", "platforms": "PC VR, HTC Vive, SteamVR", "dates": "Oct 2020 – Jan 2022", "downloads": null, "url": null, "role": "Lead programmer",
-    "bullets": [
-     "Sole programmer from the first commit: LAN multiplayer on MLAPI with network discovery, rounds, score table, late join.",
-     "Full-body avatars calibrated to Vive Trackers with FinalIK and synced over the network; calibration of physical planks and room to the virtual city.",
-     "HyperBlaster guns with two-handed grip, drone enemies on Behavior Designer, HDRP lighting, LODs and occlusion culling for a stable 90+ FPS."
-    ] },
-  { "studio": "PamPam Studio", "name": "Boom.io – 3D Hero Battle Arena", "genre": "Arena action", "platforms": "Android, iOS", "dates": "Oct – Nov 2020", "downloads": "10K+", "url": "https://play.google.com/store/apps/details?id=com.impostor.run", "role": "Unity developer",
-    "bullets": [ "Revive and win screens, coins panel and UI feedback animations." ] },
-  { "studio": "PamPam Studio", "name": "My Cooking Idle", "genre": "Idle tycoon", "platforms": "Android, iOS", "dates": "Apr – Aug 2020", "downloads": "10K+", "url": "https://play.google.com/store/apps/details?id=pampam.cooking.idle", "role": "Unity developer",
-    "bullets": [ "Made the first commit; boosters and modifiers (including offline income), upgrades, IAP with subscriptions and VIP, localization, data-driven UI." ] },
-  { "studio": "PamPam Studio", "name": "Crashy Cops 3D", "genre": "Hyper-casual", "platforms": "Android, iOS", "dates": "2019 – 2020", "downloads": "100K+", "url": "https://play.google.com/store/apps/details?id=com.ovivo.crashycops", "role": "LiveOps developer",
-    "bullets": [ "CPU/GPU profiling and optimization for low-end devices; refactored legacy UI and added content during LiveOps." ] },
-  { "studio": "PamPam Studio", "name": "VR Shooting LBE", "genre": "Location-based VR", "platforms": "PC VR, HTC Vive, SteamVR", "dates": "2019 – 2020", "downloads": null, "url": null, "role": "Unity developer",
-    "bullets": [ "Audio logic with Wwise; migration to SteamVR Input with custom bindings for Vive Trackers and HyperBlaster guns; laser-tag haptic vests; profiling and LiveOps features." ] },
-  { "studio": "PamPam Studio", "name": "Capsule VR cinema", "genre": "Location-based VR", "platforms": "PC VR, HTC Vive", "dates": "Apr – Aug 2019", "downloads": null, "url": null, "role": "Sole developer",
-    "bullets": [ "Stereo VR video with a video switcher and 4-channel audio; Leap Motion hands and a Vive Tracker IK avatar; capsule visuals and shaders." ] },
-  { "studio": "PamPam Studio", "name": "WebAR promo game (NDA)", "genre": "Marker-based AR game, sports-drink brand", "platforms": "Mobile web", "dates": "Autumn – Winter 2018", "downloads": null, "url": null, "role": "Lead developer",
-    "bullets": [ "Lead developer in a team of 3: core mechanics and controls in plain JavaScript and three.js (colleagues: UI, AR plugin optimization); launched from an AR marker in the mobile browser, no app install." ] },
-  { "studio": "Rolling Games", "name": "Ball Rush", "genre": "3D runner", "platforms": "Android, iOS", "dates": "Spring 2018", "downloads": null, "url": null, "role": "Unity developer",
-    "bullets": [ "The whole UI with animated effects; physics-based gameplay; parts of the Photon networking; analytics SDKs." ] },
-  { "studio": "Rolling Games", "name": "Apartments VR", "genre": "Architectural visualization", "platforms": "PC VR, Android Daydream", "dates": "Late 2017 – early 2018", "downloads": null, "url": null, "role": "Unity developer",
-    "bullets": [ "Cross-platform VR interactions and spatial UI; lighting and rendering setup for high visual quality." ] },
-  { "studio": "Rolling Games", "name": "VR Bus, VR Balloon", "genre": "Location-based VR", "platforms": "PC VR, HTC Vive · Dubai Mall VR Park (Emaar)", "dates": "Autumn 2017", "downloads": null, "url": null, "role": "Unity developer",
-    "bullets": [
-     "Bus trip and hot-air balloon rides, built in parallel with two other projects; cashier's control panel started each ride over LAN; barcode readers.",
-     "Buttkicker shakers under the bus seats driven by the ride's audio for vibration."
-    ] },
-  { "studio": "Rolling Games", "name": "Burj payment system", "genre": "B2B desktop client", "platforms": "PC · VR Burj Khalifa attraction", "dates": "Autumn 2017", "downloads": null, "url": null, "role": "Unity developer",
-    "bullets": [ "Standalone desktop client with barcode scanner integration and LAN sync with the main attraction software." ] },
-  { "studio": "Rolling Games", "name": "VRZoo", "genre": "Location-based VR", "platforms": "PC VR, HTC Vive · Dubai Mall VR Park (Emaar)", "dates": "Early 2017", "downloads": null, "url": null, "role": "Unity developer",
-    "bullets": [
-     "At launch, the top-earning attraction at Dubai Mall VR Park.",
-     "VR interactions and spatial UI; inter-process protocol between the VR app, an external launcher and the payment system."
-    ] },
-  { "studio": "Rolling Games", "name": "Elementix", "genre": "Puzzle", "platforms": "Android, iOS", "dates": "2016 – 2017 · two iterations, carried over to PamPam", "downloads": "5K+", "url": "https://play.google.com/store/apps/details?id=com.pampam.elementix", "role": "Unity developer",
-    "bullets": [ "Grid-based puzzle logic, state transitions and UI." ] },
-  { "studio": "Rolling Games", "name": "RollerCoaster Tycoon World", "genre": "Theme park simulation", "platforms": "PC, Steam", "dates": "2015 – 2016", "downloads": null, "url": "https://store.steampowered.com/app/282560/RollerCoaster_Tycoon_World/", "role": "UI developer",
-    "bullets": [ "Complex PC user interface screens." ] },
-  { "studio": "Rolling Games", "name": "7 Pin Pool", "genre": "Mobile multiplayer pool", "platforms": "Android, iOS", "dates": "2015 – 2016", "downloads": null, "url": "https://apkpure.com/7-pin-pool/com.dmd.seven.pinpool", "role": "Unity developer",
-    "bullets": [ "Extended a third-party networking asset with custom game loops and UI.", "GameSparks and Photon for authentication and matchmaking." ] },
-  { "studio": "Rolling Games", "name": "Caveman Rush", "genre": "2D runner", "platforms": "Android, iOS", "dates": "2015 – 2016", "downloads": null, "url": null, "role": "Unity developer",
-    "bullets": [ "Runner mechanics, obstacle spawning and UI for different aspect ratios." ] }
+  {
+   "studio": "PamPam Studio",
+   "name": "Survivors-like F2P game (NDA)",
+   "genre": "Survivors-like action, F2P, soft launch",
+   "platforms": "WebGL, Android",
+   "dates": "Jul – Nov 2026",
+   "downloads": null,
+   "url": null,
+   "role": "Unity client & backend developer",
+   "bullets": [
+    "Unity client: moved the game from a mock local API to the server; generated C# contract types, command queue, snapshots with revision-conflict retry, session refresh, maintenance notices, platform SSO and payments.",
+    "Authoritative server on NestJS, TypeORM and PostgreSQL: economy, energy, missions, shop and offers, purchases, Battle Pass, remote config and feature gates; 51 modules, 121 OpenAPI operations, ~2,250 unit and 195 integration tests.",
+    "Performance: database queries per request cut for bootstrap 63 → 13, mission result 150–200 → 11–14, Battle Pass claim 33 → 8; cold start 6–25 s → 3.4–5.3 s; load test of 600 heavy players at 106 req/s on 4 instances.",
+    "Docker images on Cloudflare Workers + Containers across up to 7 environments; OpenTelemetry metrics and SLO alerts; admin API and panel (sole developer); scaled GA4 analytics delivery 6.6 → 41.7 events/s.",
+    "Sole backend developer. Spec-driven development (SDD): I owned architecture, specs, review and testing; implementation by Claude Code agents."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Hit Master 3D",
+   "genre": "Hyper-casual action",
+   "platforms": "Android, iOS",
+   "dates": "Oct 2025 – Jun 2026",
+   "downloads": "100M+",
+   "url": "https://play.google.com/store/apps/details?id=com.hit.master",
+   "role": "LiveOps, sole developer",
+   "bullets": [
+    "Practically the only developer on the project in this period; shipped Android versions 1.9 → 1.23 and an iOS release.",
+    "Casual meta and economy: SuperHit mechanic, skins merge board with inventory, daily rewards and quests, kill streaks; upgrade economy and balance driven by Remote Config with A/B test groups.",
+    "Helicopter boss fight with rockets and drones; Google Play Games sign-in and achievements.",
+    "Performance optimization: projectile and boss-fight pooling, GC fixes and code refactoring; most frame hitches during and after levels disappeared.",
+    "SDK and engine updates: Unity 6, Android API 36, Firebase, Unity IAP 5, AppsFlyer, Azur Games UCM 6."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Alien Horde: Squad Survival",
+   "genre": "Midcore survivors-like squad action",
+   "platforms": "Android",
+   "dates": "Feb – Oct 2025",
+   "downloads": "5K+",
+   "url": "https://play.google.com/store/apps/details?id=com.squads.survivals",
+   "role": "Unity developer",
+   "bullets": [
+    "Built from scratch to Google Play release; most active of 6 programmers by code commits.",
+    "Squad core: character factory, formations with baked positions, movement and selection, on the Zenject architecture.",
+    "Enemies and three bosses (Claws, Mutant Slime, Striker) with Behavior Designer trees: charges, AOE, multishot, bouncing projectiles; elemental enemies.",
+    "Save system with MemoryPack and cloud saves (Voxel Busters) via Play Games login.",
+    "Animations, VFX and the whole audio integration for enemies and bosses; Addressables with Play Asset Delivery; Azur Games UCM SDK; UI."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Survive Squad",
+   "genre": "Midcore survivors-like shooter / roguelike",
+   "platforms": "Android, iOS",
+   "dates": "Oct 2023 – Dec 2025",
+   "downloads": "10M+",
+   "url": "https://play.google.com/store/apps/details?id=com.stardust.chaossurvive",
+   "role": "LiveOps developer, then lead",
+   "bullets": [
+    "One of 3 programmers, then lead programmer when the team became 2; a live codebase taken over from the original studio.",
+    "URP optimization for low-end devices: sprite shadows instead of real-time ones, simplified materials and VFX, FPS-driven quality switching; Xiaomi Mi A2 Lite went from 13–15 to 20–22 FPS.",
+    "Features: chapters and checkpoints, spin-wheel rewards, a new hero with a turret ultimate, an alternative payment provider behind a purchase abstraction.",
+    "Pooled audio system; migration to Unity 6; analytics, ads and attribution SDK updates; editor tools for builds and shaders."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Magic Friends – Color Hands",
+   "genre": "Hybrid-casual physics action",
+   "platforms": "Android, iOS",
+   "dates": "Sep 2022 – Dec 2023",
+   "downloads": "10M+",
+   "url": "https://play.google.com/store/apps/details?id=magic.friends.rainbow",
+   "role": "Sole programmer",
+   "bullets": [
+    "Sole programmer, working with a level designer and artists; full cycle from first prototype through release and LiveOps (versions 0.0.1 → 1.1.9).",
+    "Hand mechanics on Obi Rope physics (stretch, wrap, pierce, fire, ice, thunder hands) and ragdoll enemies with PuppetMaster.",
+    "Meta systems: craft lab, boosters, world map, islands with passive income, tutorials; remote-config feature flags and A/B tests.",
+    "Ads, IAP and analytics: AppLovin MAX with several networks, Firebase, GameAnalytics, Adjust; Android and iOS release builds; mobile physics optimization."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Tortilla Game! Slap Challenge",
+   "genre": "Hyper-casual",
+   "platforms": "Android",
+   "dates": "Jul – Nov 2022",
+   "downloads": null,
+   "url": "https://play.google.com/store/apps/details?id=tortilla.game.slap",
+   "role": "Sole programmer",
+   "bullets": [
+    "Started the project: timing slap bar, rock-paper-scissors rounds, upgrades, cinematic cameras, game-loop UI, publisher SDK."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Ragdoll Flying Runner",
+   "genre": "Hyper-casual",
+   "platforms": "Android, iOS",
+   "dates": "Mar – May 2022",
+   "downloads": null,
+   "url": "https://play.google.com/store/apps/details?id=ragdoll.fly.runner",
+   "role": "Main developer",
+   "bullets": [
+    "Turned an earlier prototype into a runner: road generation, sword and ragdoll physics, prop spawner, weapon booster and shop, publisher SDK."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Diamond Land",
+   "genre": "Casual 3D",
+   "platforms": "Android (no longer on Google Play)",
+   "dates": "Feb – Jun 2022",
+   "downloads": null,
+   "url": null,
+   "role": "Sole programmer",
+   "bullets": [
+    "Started the project: procedural seed-based underground, digging and tree cutting, ground/underground camera switch, production machines, saves, analytics SDKs."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Plank PvP",
+   "genre": "Location-based VR multiplayer shooter",
+   "platforms": "PC VR, HTC Vive, SteamVR",
+   "dates": "Oct 2020 – Jan 2022",
+   "downloads": null,
+   "url": null,
+   "role": "Lead programmer",
+   "bullets": [
+    "Sole programmer from the first commit: LAN multiplayer on MLAPI with network discovery, rounds, score table, late join.",
+    "Full-body avatars calibrated to Vive Trackers with FinalIK and synced over the network; calibration of physical planks and room to the virtual city.",
+    "HyperBlaster guns with two-handed grip, drone enemies on Behavior Designer, HDRP lighting, LODs and occlusion culling for a stable 90+ FPS."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Boom.io – 3D Hero Battle Arena",
+   "genre": "Arena action",
+   "platforms": "Android, iOS",
+   "dates": "Oct – Nov 2020",
+   "downloads": "10K+",
+   "url": "https://play.google.com/store/apps/details?id=com.impostor.run",
+   "role": "Unity developer",
+   "bullets": [
+    "Revive and win screens, coins panel and UI feedback animations."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "My Cooking Idle",
+   "genre": "Idle tycoon",
+   "platforms": "Android, iOS",
+   "dates": "Apr – Aug 2020",
+   "downloads": "10K+",
+   "url": "https://play.google.com/store/apps/details?id=pampam.cooking.idle",
+   "role": "Unity developer",
+   "bullets": [
+    "Made the first commit; boosters and modifiers (including offline income), upgrades, IAP with subscriptions and VIP, localization, data-driven UI."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Crashy Cops 3D",
+   "genre": "Hyper-casual",
+   "platforms": "Android, iOS",
+   "dates": "2019 – 2020",
+   "downloads": "100K+",
+   "url": "https://play.google.com/store/apps/details?id=com.ovivo.crashycops",
+   "role": "LiveOps developer",
+   "bullets": [
+    "CPU/GPU profiling and optimization for low-end devices; refactored legacy UI and added content during LiveOps."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "VR Shooting LBE",
+   "genre": "Location-based VR",
+   "platforms": "PC VR, HTC Vive, SteamVR",
+   "dates": "2019 – 2020",
+   "downloads": null,
+   "url": null,
+   "role": "Unity developer",
+   "bullets": [
+    "Audio logic with Wwise; migration to SteamVR Input with custom bindings for Vive Trackers and HyperBlaster guns; laser-tag haptic vests; profiling and LiveOps features."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "Capsule VR cinema",
+   "genre": "Location-based VR",
+   "platforms": "PC VR, HTC Vive",
+   "dates": "Apr – Aug 2019",
+   "downloads": null,
+   "url": null,
+   "role": "Sole developer",
+   "bullets": [
+    "Stereo VR video with a video switcher and 4-channel audio; Leap Motion hands and a Vive Tracker IK avatar; capsule visuals and shaders."
+   ]
+  },
+  {
+   "studio": "PamPam Studio",
+   "name": "WebAR promo game (NDA)",
+   "genre": "Marker-based AR game, sports-drink brand",
+   "platforms": "Mobile web",
+   "dates": "Autumn – Winter 2018",
+   "downloads": null,
+   "url": null,
+   "role": "Lead developer",
+   "bullets": [
+    "Lead developer in a team of 3: core mechanics and controls in plain JavaScript and three.js (colleagues: UI, AR plugin optimization); launched from an AR marker in the mobile browser, no app install."
+   ]
+  },
+  {
+   "studio": "Rolling Games",
+   "name": "Ball Rush",
+   "genre": "3D runner",
+   "platforms": "Android, iOS",
+   "dates": "Spring 2018",
+   "downloads": null,
+   "url": null,
+   "role": "Unity developer",
+   "bullets": [
+    "The whole UI with animated effects; physics-based gameplay; parts of the Photon networking; analytics SDKs."
+   ]
+  },
+  {
+   "studio": "Rolling Games",
+   "name": "Apartments VR",
+   "genre": "Architectural visualization",
+   "platforms": "PC VR, Android Daydream",
+   "dates": "Late 2017 – early 2018",
+   "downloads": null,
+   "url": null,
+   "role": "Unity developer",
+   "bullets": [
+    "Cross-platform VR interactions and spatial UI; lighting and rendering setup for high visual quality."
+   ]
+  },
+  {
+   "studio": "Rolling Games",
+   "name": "VR Bus, VR Balloon",
+   "genre": "Location-based VR",
+   "platforms": "PC VR, HTC Vive · Dubai Mall VR Park (Emaar)",
+   "dates": "Autumn 2017",
+   "downloads": null,
+   "url": null,
+   "role": "Unity developer",
+   "bullets": [
+    "Bus trip and hot-air balloon rides, built in parallel with two other projects; cashier's control panel started each ride over LAN; barcode readers.",
+    "Buttkicker shakers under the bus seats driven by the ride's audio for vibration."
+   ]
+  },
+  {
+   "studio": "Rolling Games",
+   "name": "Burj payment system",
+   "genre": "B2B desktop client",
+   "platforms": "PC · VR Burj Khalifa attraction",
+   "dates": "Autumn 2017",
+   "downloads": null,
+   "url": null,
+   "role": "Unity developer",
+   "bullets": [
+    "Standalone desktop client with barcode scanner integration and LAN sync with the main attraction software."
+   ]
+  },
+  {
+   "studio": "Rolling Games",
+   "name": "VRZoo",
+   "genre": "Location-based VR",
+   "platforms": "PC VR, HTC Vive · Dubai Mall VR Park (Emaar)",
+   "dates": "Early 2017",
+   "downloads": null,
+   "url": null,
+   "role": "Unity developer",
+   "bullets": [
+    "At launch, the top-earning attraction at Dubai Mall VR Park.",
+    "VR interactions and spatial UI; inter-process protocol between the VR app, an external launcher and the payment system."
+   ]
+  },
+  {
+   "studio": "Rolling Games",
+   "name": "Elementix",
+   "genre": "Puzzle",
+   "platforms": "Android, iOS",
+   "dates": "2016 – 2017 · two iterations, carried over to PamPam",
+   "downloads": "5K+",
+   "url": "https://play.google.com/store/apps/details?id=com.pampam.elementix",
+   "role": "Unity developer",
+   "bullets": [
+    "Grid-based puzzle logic, state transitions and UI."
+   ]
+  },
+  {
+   "studio": "Rolling Games",
+   "name": "RollerCoaster Tycoon World",
+   "genre": "Theme park simulation",
+   "platforms": "PC, Steam",
+   "dates": "2015 – 2016",
+   "downloads": null,
+   "url": "https://store.steampowered.com/app/282560/RollerCoaster_Tycoon_World/",
+   "role": "UI developer",
+   "bullets": [
+    "Complex PC user interface screens."
+   ]
+  },
+  {
+   "studio": "Rolling Games",
+   "name": "7 Pin Pool",
+   "genre": "Mobile multiplayer pool",
+   "platforms": "Android, iOS",
+   "dates": "2015 – 2016",
+   "downloads": null,
+   "url": "https://apkpure.com/7-pin-pool/com.dmd.seven.pinpool",
+   "role": "Unity developer",
+   "bullets": [
+    "Extended a third-party networking asset with custom game loops and UI.",
+    "GameSparks and Photon for authentication and matchmaking."
+   ]
+  },
+  {
+   "studio": "Rolling Games",
+   "name": "Caveman Rush",
+   "genre": "2D runner",
+   "platforms": "Android, iOS",
+   "dates": "2015 – 2016",
+   "downloads": null,
+   "url": null,
+   "role": "Unity developer",
+   "bullets": [
+    "Runner mechanics, obstacle spawning and UI for different aspect ratios."
+   ]
+  }
  ],
  "skills": [
-  ["Unity & C# (10+ years)", "Zenject, UniTask, UniRx, Addressables, pooling, profiling, URP, HDRP, UGUI, DOTween"],
-  ["Backend (with AI agents)", "TypeScript, Node.js, NestJS, TypeORM, PostgreSQL, REST / OpenAPI, Jest"],
-  ["Infrastructure", "Cloudflare Workers + Containers, Docker, OpenTelemetry, load testing"],
-  ["Networking", "client-server sync, Netcode (MLAPI), Photon, LAN"],
-  ["Gameplay & AI", "Behavior Trees, Obi Rope, PuppetMaster, FinalIK, physics-based mechanics"],
-  ["Monetization & analytics", "AppLovin MAX, AdMob, Unity IAP, AppsFlyer, Adjust, Firebase, GA4"],
-  ["Platforms", "Android, iOS, WebGL, PC VR (SteamVR, HTC Vive, Leap Motion), mobile web (three.js, WebAR)"],
-  ["AI-assisted development", "Claude Code, spec-driven development (SDD), parallel agents, MCP"],
-  ["Tools", "Rider, Visual Studio, Git, Jira"]
+  [
+   "Unity & C# (10+ years)",
+   "Zenject, UniTask, UniRx, Addressables, pooling, profiling, URP, HDRP, UGUI, DOTween"
+  ],
+  [
+   "Backend (with AI agents)",
+   "TypeScript, Node.js, NestJS, TypeORM, PostgreSQL, REST / OpenAPI, Jest"
+  ],
+  [
+   "Infrastructure",
+   "Cloudflare Workers + Containers, Docker, OpenTelemetry, load testing"
+  ],
+  [
+   "Networking",
+   "client-server sync, Netcode (MLAPI), Photon, LAN"
+  ],
+  [
+   "Gameplay & AI",
+   "Behavior Trees, Obi Rope, PuppetMaster, FinalIK, physics-based mechanics"
+  ],
+  [
+   "Monetization & analytics",
+   "AppLovin MAX, AdMob, Unity IAP, AppsFlyer, Adjust, Firebase, GA4"
+  ],
+  [
+   "Platforms",
+   "Android, iOS, WebGL, PC VR (SteamVR, HTC Vive, Leap Motion), mobile web (three.js, WebAR)"
+  ],
+  [
+   "AI-assisted development",
+   "Claude Code, spec-driven development (SDD), parallel agents, MCP"
+  ],
+  [
+   "Tools",
+   "Rider, Visual Studio, Git, Jira"
+  ]
  ],
  "languages": "Russian — native · Ukrainian — native · English — Upper Intermediate (B2)",
  "education": [
-  { "school": "Chernihiv National Technological University", "degree": "Specialist, Computer Systems and Networks", "dates": "2014 – 2015" },
-  { "school": "Chernihiv State Technological University", "degree": "Bachelor, Computer Engineering", "dates": "2010 – 2014" }
+  {
+   "school": "Chernihiv National Technological University",
+   "degree": "Specialist, Computer Systems and Networks",
+   "dates": "2014 – 2015"
+  },
+  {
+   "school": "Chernihiv State Technological University",
+   "degree": "Bachelor, Computer Engineering",
+   "dates": "2010 – 2014"
+  }
  ],
  "note": "Download counts from Google Play, November 2026."
 };
